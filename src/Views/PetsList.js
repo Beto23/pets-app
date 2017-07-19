@@ -3,21 +3,41 @@ import React, { Component } from 'react';
 import {
     View,
     Text,
-    StyleSheet
+    StyleSheet,
+    FlatList,
+    TouchableOpacity
 } from 'react-native';
 
 //Components
 import Card from '../Components/Card';
 
 class PetsList extends Component {
+  _keyExtractor = (item, index) => item.id;
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: []
+    }
+  }
+
+  componentDidMount() {
+    // Simulacion de listado de 500 datos
+    let data = [];
+    for (var index = 0; index <= 500; index++) {
+      data.push({id: index})
+    }
+    this.setState({data: data});
+  }
 
   render() {
     return (
       <View style={styles.container}>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>        
+        <FlatList 
+          data={this.state.data}
+          keyExtractor={this._keyExtractor}
+          renderItem={(item, key) => <TouchableOpacity><Card/></TouchableOpacity> }>
+        </FlatList>
       </View>
     );
   }
@@ -27,7 +47,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
     flex: 1,
-    alignItems: "center",
     padding: 10
   }
 })
