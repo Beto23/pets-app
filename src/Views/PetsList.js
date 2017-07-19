@@ -7,6 +7,7 @@ import {
     FlatList,
     TouchableOpacity
 } from 'react-native';
+import { Actions } from "react-native-router-flux";
 
 //Components
 import Card from '../Components/Card';
@@ -30,13 +31,17 @@ class PetsList extends Component {
     this.setState({data: data});
   }
 
+  handleCardClick = () =>{
+    Actions.PetDetail()
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <FlatList 
           data={this.state.data}
           keyExtractor={this._keyExtractor}
-          renderItem={(item, key) => <TouchableOpacity><Card/></TouchableOpacity> }>
+          renderItem={(item, key) => <TouchableOpacity onPress={this.handleCardClick}><Card/></TouchableOpacity> }>
         </FlatList>
       </View>
     );
