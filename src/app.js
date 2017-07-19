@@ -11,12 +11,13 @@ import {Scene, Router} from 'react-native-router-flux';
 
 //Views
 import Home from './Views/Home';
+import PetList from './Views/PetsList';
 
 export default class pets extends Component {
   render() {
     return <Router>
         <Scene key="root">
-            <Scene key="home" component={Home} hideNavBar />
+            <Scene key="PetList" component={PetList} hideNavBar />
         </Scene>
       </Router>
   }
