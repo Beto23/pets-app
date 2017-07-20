@@ -6,8 +6,12 @@ import {
     Text,
     StyleSheet,
     Image,
-    Dimensions
+    Dimensions,
+    TouchableOpacity
 } from 'react-native';
+
+//Components
+import ItemBox from './ItemBox';
 
 // const { width, height } = Dimensions.get(window);
 
@@ -15,7 +19,9 @@ class Menu extends Component {
     render() {
         return(
             <View style={styles.menu}>
-                <Text>Menu</Text>
+                <TouchableOpacity>
+                    <ItemBox/>
+                </TouchableOpacity>
             </View>
         )
     }
@@ -24,7 +30,7 @@ class Menu extends Component {
 const styles = StyleSheet.create({
     menu: {
         flex: 1,
-        backgroundColor: "red"
+        backgroundColor: "white"
     }
 });
 
