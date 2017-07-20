@@ -4,22 +4,44 @@ import {
     Text,
     StyleSheet
 } from 'react-native';
+import SideMenu from 'react-native-side-menu';
+
+//Components
+import Header from '../Components/Header';
+import Menu from '../Components/Menu';
+import PetList from './PetsList';
 
 class Home extends Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      isOpen: false
+    }
+  }
+
+  componentDidMount() {
+    console.log(this.state.isOpen);
+  }
+
+  handleToggle = () => {
+    this.setState({isOpen: !this.state.isOpen});
+  }
+
+  updateMenu(isOpen){
+    this.setState({isOpen})
+  }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to Home Pets!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
+        <SideMenu
+          menu={<Menu/>}
+          isOpen={this.state.isOpen}
+          onChange={(isOpen) => this.updateMenu(isOpen)}>
+          <Header toggle={this.handleToggle} />
+          <PetList />
+        </SideMenu>
       </View>
     );
   }
@@ -29,19 +51,7 @@ class Home extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
   },
 });
 

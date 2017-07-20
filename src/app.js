@@ -18,6 +18,7 @@ export default class pets extends Component {
   render() {
     return <Router>
         <Scene key="root">
+            <Scene key="Home" component={Home} hideNavBar />
             <Scene key="PetList" component={PetList} hideNavBar />
             <Scene key="PetDetail" component={PetDetail} hideNavBar={false} title="Detalle de Mascota"/>            
         </Scene>
