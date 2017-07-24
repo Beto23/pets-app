@@ -9,6 +9,7 @@ import {
     TouchableOpacity
 } from "react-native";
 import Communications from 'react-native-communications';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 class PetDetail extends Component {
 
@@ -45,15 +46,21 @@ class PetDetail extends Component {
                 <View style={styles.infoContent}>
                    <View style={styles.info}>
                         <View style={styles.infoData}>
-                            <Text style={styles.label}>Telefono</Text>
-                            <TouchableOpacity onPress={() => this.handlePhone('8442554476', true)}>
-                                <Text>8442923533</Text>
+                            {/*<Text style={styles.label}>Telefono</Text>*/}
+                            <TouchableOpacity 
+                                style={{flexDirection: "row", alignItems: "center"}}
+                                onPress={() => this.handlePhone('8442554476', true)}>
+                                <Icon name="ios-call-outline" size={30} color="#373737" />
+                                <Text style={{marginLeft: 5}}>8442923533</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.infoData}>
-                            <Text style={styles.label}>Email</Text>
-                            <TouchableOpacity onPress={() => Communications.email(['josee-45@hotmail.com'],null,null,'My Subject','My body text')}>
-                                <Text>josee-45@hotmail.com</Text>
+                            {/*<Text style={styles.label}>Email</Text>*/}
+                            <TouchableOpacity
+                                style={{flexDirection: "row", alignItems: "center"}}
+                                onPress={() => Communications.email(['josee-45@hotmail.com'],null,null,'My Subject','My body text')}>
+                                <Icon name="ios-mail-outline" size={30} color="#373737" />
+                                <Text style={{marginLeft: 5}}>josee-45@hotmail.com</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
