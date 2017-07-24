@@ -11,7 +11,7 @@ class ItemBox extends Component {
     render() {
         const { item, handleItem } = this.props;
         return(
-            <TouchableOpacity onPress={handleItem}>
+            <TouchableOpacity onPress={() => handleItem(item)}>
                 <View style={styles.box}>
                     <Text>{item.name}</Text>
                 </View>

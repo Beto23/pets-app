@@ -13,6 +13,7 @@ import {Scene, Router} from 'react-native-router-flux';
 import Home from './Views/Home';
 import PetList from './Views/PetsList';
 import PetDetail from './Views/PetDetail';
+import PetsLostsList from './Views/PetsLostsList';
 
 export default class pets extends Component {
   render() {
@@ -20,7 +21,8 @@ export default class pets extends Component {
         <Scene key="root">
             <Scene key="Home" component={Home} hideNavBar />
             <Scene key="PetList" component={PetList} hideNavBar />
-            <Scene key="PetDetail" component={PetDetail} hideNavBar={false} title="Detalle de Mascota"/>            
+            <Scene key="PetDetail" component={PetDetail} hideNavBar={false} title="Detalle de Mascota"/>
+            <Scene key="PetsLostsList" component={PetsLostsList} hideNavBar={false} title="Mascotas Perdidas"/>
         </Scene>
       </Router>
   }

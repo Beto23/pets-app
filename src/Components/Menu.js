@@ -10,6 +10,8 @@ import {
     TouchableOpacity
 } from 'react-native';
 
+import { Actions } from "react-native-router-flux";
+
 //Components
 import ItemBox from './ItemBox';
 
@@ -20,8 +22,17 @@ import { menuPaths } from '../menuPaths';
 
 class Menu extends Component {
 
-    handlePath = () => {
-        console.warn("Fuga a la path");
+    handlePath = (item) => {
+        switch (item.id) {
+            case 1:
+                // Actions.AddPet);            
+                break;
+            case 2:
+                Actions.PetsLostsList();
+            default:
+                break;
+        }
+        this.props.closeMenu();
     }
 
     render() {

@@ -32,11 +32,15 @@ class Home extends Component {
     this.setState({isOpen})
   }
 
+  closeMenu = () => {
+    this.setState({isOpen: false})
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <SideMenu
-          menu={<Menu/>}
+          menu={<Menu closeMenu={this.closeMenu}/>}
           isOpen={this.state.isOpen}
           onChange={(isOpen) => this.updateMenu(isOpen)}>
           <Header toggle={this.handleToggle} />
