@@ -4,14 +4,18 @@ import {
     View,
     Text,
     StyleSheet,
+    TouchableOpacity
 } from 'react-native';
 
 class ItemBox extends Component {
     render() {
+        const { item, handleItem } = this.props;
         return(
-            <View style={styles.box}>
-                <Text>Publicar Mascota</Text>
-            </View>
+            <TouchableOpacity onPress={handleItem}>
+                <View style={styles.box}>
+                    <Text>{item.name}</Text>
+                </View>
+            </TouchableOpacity>
         )
     }
 }
