@@ -25,10 +25,11 @@ class Menu extends Component {
     handlePath = (item) => {
         switch (item.id) {
             case 1:
-                // Actions.AddPet);            
+                Actions.PetAdd();            
                 break;
             case 2:
                 Actions.PetsLostsList();
+                break;
             default:
                 break;
         }
