@@ -7,6 +7,8 @@ import {
     TouchableOpacity,
     FlatList
 } from 'react-native';
+import { Actions } from "react-native-router-flux";
+
 
 //Components
 import CardDescription from '../Components/CardDescription';
@@ -21,14 +23,26 @@ class PetsLostsList extends Component {
         }
     }
 
-  componentDidMount() {
-    // Simulacion de listado de 10 datos
-    let data = [];
-    for (var index = 0; index <= 10; index++) {
-      data.push({id: index})
+    componentDidMount() {
+        // Simulacion de listado de 10 datos
+        let data = [];
+        for (var index = 0; index <= 10; index++) {
+            data.push({id: index})
+        }
+        this.setState({data: data});
     }
-    this.setState({data: data});
-  }
+
+    handleClick = (item) => {
+        Actions.PetLostDetail({item})
+    }
+
+    renderItem (item) {
+        return(
+            <TouchableOpacity onPress={(item) =>this.handleClick(item.item)}>
+                <CardDescription/>
+            </TouchableOpacity>
+        )
+    }
 
     render() {
         return(
@@ -36,7 +50,7 @@ class PetsLostsList extends Component {
                 <FlatList 
                     data={this.state.data}
                     keyExtractor={this._keyExtractor}
-                    renderItem={(item, key) => <TouchableOpacity><CardDescription/></TouchableOpacity> }>
+                    renderItem={(item, key) => this.renderItem(item) }>
                 </FlatList>
             </View>
         )

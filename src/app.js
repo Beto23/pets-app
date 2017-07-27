@@ -14,6 +14,7 @@ import Home from './Views/Home';
 import PetList from './Views/PetsList';
 import PetDetail from './Views/PetDetail';
 import PetsLostsList from './Views/PetsLostsList';
+import PetLostDetail from './Views/PetLostDetail';
 
 export default class pets extends Component {
   render() {
@@ -23,6 +24,7 @@ export default class pets extends Component {
             <Scene key="PetList" component={PetList} hideNavBar />
             <Scene key="PetDetail" component={PetDetail} hideNavBar={false} title="Detalle de Mascota"/>
             <Scene key="PetsLostsList" component={PetsLostsList} hideNavBar={false} title="Mascotas Perdidas"/>
+            <Scene key="PetLostDetail" component={PetLostDetail} hideNavBar={false} title="Detalle de Mascota"/>            
         </Scene>
       </Router>
   }
