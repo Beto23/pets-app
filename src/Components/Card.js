@@ -14,17 +14,12 @@ class Card extends Component {
             <View style={styles.CardContainer}>
                 <Image style={styles.image} source={{uri: "https://static.pexels.com/photos/58997/pexels-photo-58997.jpeg"}} />
                 <View style={styles.info}>
-                    <Text style={styles.name}>Beto</Text>
-                    <View style={styles.row}>
-                        <View style={styles.infoData}>
-                            <Text>Edad</Text>
-                            <Text style={styles.count}>2 años</Text>
-                        </View>
-                        <View style={styles.infoData}>
-                            <Text style={styles.count}>Raza</Text>
-                            <Text>Lobo</Text>
-                        </View>
+                    <Text style={styles.name}>Beto/Adopción</Text>
+                    <View style={styles.infoData}>
+                        <Text>Mestizo/Cruza</Text>
+                        <Text style={styles.count}>Macho/Joven</Text>
                     </View>
+                    <Text style={styles.location}>Saltillo, Coahuila</Text>
                 </View>
             </View>
         );
@@ -32,45 +27,42 @@ class Card extends Component {
 }
 
 const styles = StyleSheet.create({
-  image: {
-      width: 150,
-      height: 150
-  },
-  CardContainer: {
-      margin: 5,
-      backgroundColor: 'white',
-      flexDirection: 'row',
-      elevation: 3, // android
-      shadowColor: 'black', //ios
-      shadowOpacity: .2, //ios
-      shadowOffset: { //ios
-          height: 1,
-          width: -2
-      }
-  },
-  info: {
-      flex: 1,
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center'
-  },
-  name: {
-      fontSize: 20,
-      marginTop: 10,
-      color: '#333'
-  },
-  row: {
-    flexDirection: 'row',
-    marginHorizontal: 30,
-    marginTop: 15
-  },
-  infoData: {
-      flex: 1,
-      alignItems: 'center',
-  },
-  count: {
-      color: 'gray'
-  }
+    image: {
+        width: 150,
+        height: 150
+    },
+    CardContainer: {
+        margin: 5,
+        backgroundColor: 'white',
+        flexDirection: 'row',
+        elevation: 3, // android
+        shadowColor: 'black', //ios
+        shadowOpacity: .2, //ios
+        shadowOffset: { //ios
+            height: 1,
+            width: -2
+        }
+    },
+    info: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    name: {
+        fontSize: 17,
+        marginTop: 10,
+        color: '#333'
+    },
+    infoData: {
+    alignItems: 'center',
+    marginTop: 12
+    },
+    count: {
+        color: 'gray'
+    },
+    location: {
+        marginTop: 15
+    }
 });
 
 export default Card;
