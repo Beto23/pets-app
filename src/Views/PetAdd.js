@@ -23,11 +23,14 @@ class PetAdd extends Component {
 
     OpenImagePicker = () => {
         const options = {
-            title: 'Select picture',
+            title: 'Seleccionar foto',
             storeOptions: {
-                skipBackuo: true,
-                path: 'images'
-            }
+                cameraRoll: true
+            },
+            cancelButtonTitle: 'Cancelar',
+            takePhotoButtonTitle: 'Tomar Foto...',
+            chooseFromLibraryButtonTitle: 'Elegir de galeria',
+            mediaType: 'photo'
         }
         ImagePicker.showImagePicker(options, (response) => {
             console.log('Response = ', response);
