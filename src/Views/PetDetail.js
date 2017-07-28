@@ -24,54 +24,54 @@ class PetDetail extends Component {
                     <Image 
                         style={styles.image}
                         source={{uri: "https://static.pexels.com/photos/160846/french-bulldog-summer-smile-joy-160846.jpeg"}} />
-                    <Text>firulais</Text>
                 </View>
-                <View style={styles.infoDog}>
-                    <View style={styles.info}>
+                <View>
+                    <View style={styles.infoRow}>
+                        <View style={styles.infoData}>
+                            <Text style={styles.label}>Nombre</Text>
+                            <Text>firulais (Macho)</Text>
+                        </View>
+                        <View style={styles.infoData}>
+                            <Text style={styles.label}>Raza</Text>
+                            <Text>Mestizo/cruza</Text>
+                        </View>
                         <View style={styles.infoData}>
                             <Text style={styles.label}>Edad</Text>
                             <Text>1año</Text>
                         </View>
-                        <View style={styles.infoData}>
-                            <Text style={styles.label}>Raza</Text>
-                            <Text>Pug</Text>
-                        </View>
-                        <View style={styles.infoData}>
-                            <Text style={styles.label}>Esterilizado</Text>
-                                <Text>Si</Text>
-                        </View>
                     </View> 
                 </View>
-                <Text>Contacto</Text>
-                <View style={styles.infoContent}>
-                   <View style={styles.info}>
+                <View>
+                    <Text style={styles.sectionTitle}>Descripción</Text>
+                    <View style={styles.descriptionContainer}>
+                        <Text style={styles.description}>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam magnam maiores animi velit asperiores ipsam dolorem eveniet vitae molestias sequi quae iusto dolor molestiae obcaecati, esse illum explicabo aliquam? Ab!
+                        </Text>
+                    </View>
+                </View>
+
+                <View>
+                    <Text style={styles.sectionTitle}>Contacto</Text>
+                    <View style={styles.infoContent}>
                         <View style={styles.infoData}>
-                            {/*<Text style={styles.label}>Telefono</Text>*/}
                             <TouchableOpacity 
                                 style={{flexDirection: "row", alignItems: "center"}}
                                 onPress={() => this.handlePhone('8442554476', true)}>
-                                <Icon name="ios-call-outline" size={30} color="#373737" />
+                                <Icon name="ios-call-outline" size={25} color="#373737" />
                                 <Text style={{marginLeft: 5}}>8442923533</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.infoData}>
-                            {/*<Text style={styles.label}>Email</Text>*/}
                             <TouchableOpacity
                                 style={{flexDirection: "row", alignItems: "center"}}
                                 onPress={() => Communications.email(['josee-45@hotmail.com'],null,null,'My Subject','My body text')}>
-                                <Icon name="ios-mail-outline" size={30} color="#373737" />
+                                <Icon name="ios-mail-outline" size={25} color="#373737" />
                                 <Text style={{marginLeft: 5}}>josee-45@hotmail.com</Text>
                             </TouchableOpacity>
                         </View>
-                    </View>
-                   <View style={styles.info}>
-                        <View style={styles.infoData}>
-                            <Text style={styles.label}>Estado</Text>
-                            <Text>Coahuila</Text>
-                        </View>
-                        <View style={styles.infoData}>
-                            <Text style={styles.label}>Pais</Text>
-                            <Text>México</Text>
+                        <View style={styles.infoData} style={{flexDirection: "row", alignItems: "center"}}>
+                                <Icon name="logo-facebook" size={25} color="#373737" />
+                                <Text style={{marginLeft: 5}}>BetoCordobaLugo</Text>
                         </View>
                     </View>
                 </View>
@@ -99,21 +99,28 @@ const styles = StyleSheet.create({
         borderTopWidth: 1,
         borderBottomWidth: 1,
         backgroundColor: "white",
-        marginTop: 15,
-        borderColor: "#e0e0e0"
+        borderColor: "#e0e0e0",
+        padding: 15
     },
-    info: {
+    infoRow: {
         flexDirection: "row",
         justifyContent: "space-between",
         flexWrap: "wrap",
         paddingBottom: 17,
-        paddingTop: 17        
-    },
-    infoData: {
-        flex: 1
+        paddingTop: 17,
     },
     label: {
         color: "black"
+    },
+    description: {
+        textAlign: 'justify'
+    },
+    descriptionContainer: {
+        backgroundColor: '#e9ebee',
+        padding: 10
+    },
+    sectionTitle: {
+        paddingVertical: 5
     }
 });
 
