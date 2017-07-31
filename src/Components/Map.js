@@ -34,8 +34,8 @@ class Map extends Component {
             region: {
                 latitude: lat,
                 longitude: lon,
-                latitudeDelta: latDelta,
-                longitudeDelta: lonDelta    
+                latitudeDelta: 1,
+                longitudeDelta: 1    
             }
         })
     }
@@ -48,7 +48,8 @@ class Map extends Component {
                 const accuracy = position.coords.accuracy;
                 this.calcDelta(lat, lon, accuracy);
             },
-            error => console.warn(JSON.stringify(error))
+            (error) => console.log(error, 'error'),
+            {enableHighAccuracy: true, timeout: 10000, maximumAge: 3000}
         )
     }
 
@@ -61,7 +62,7 @@ class Map extends Component {
 
     render() {
         const { region } = this.state;
-        console.log(region)
+        console.log(region, 'region')
         return(
             <View style={styles.container}>
                 {region.latitude ? <MapView
