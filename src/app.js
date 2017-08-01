@@ -10,6 +10,7 @@ import { AppRegistry } from 'react-native';
 import {Scene, Router} from 'react-native-router-flux';
 
 //Views
+import Login from './Views/Login';
 import Home from './Views/Home';
 import PetList from './Views/PetsList';
 import PetDetail from './Views/PetDetail';
@@ -20,6 +21,7 @@ import PetAdd from './Views/PetAdd';
 export default class pets extends Component {
   render() {
     return <Router>
+        <Scene key="Login" component={Login} hideNavBar />        
         <Scene key="root">
             <Scene key="Home" component={Home} hideNavBar />
             <Scene key="PetList" component={PetList} hideNavBar />

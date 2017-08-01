@@ -10,6 +10,10 @@ import {
     TouchableOpacity
 } from 'react-native';
 
+import {
+  LoginButton
+} from 'react-native-fbsdk';
+
 import { Actions } from "react-native-router-flux";
 
 //Components
@@ -44,6 +48,7 @@ class Menu extends Component {
                         return <ItemBox handleItem={this.handlePath} key={path.id} item={path}/>
                     })
                 }
+                <LoginButton onLogoutFinished={() => Actions.Login()} />
             </View>
         )
     }
