@@ -21,7 +21,7 @@ class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isVisibleButton: false
+            isLogged: false
         }
     }
 
@@ -34,7 +34,7 @@ class Login extends Component {
         } else {
             AccessToken.getCurrentAccessToken().then(() => {
                 Actions.root();
-                this.setState({isVisibleButton: true});
+                this.setState({isLogged: true});
             });
         }
     }
@@ -44,7 +44,7 @@ class Login extends Component {
             (data) => {
                 if(data){
                     Actions.root();
-                    this.setState({isVisibleButton: true});
+                    this.setState({isLogged: true});
                 }
                 data ? Actions.root() : null;
             }
@@ -56,7 +56,7 @@ class Login extends Component {
     }
 
     render(){
-        const { isVisibleButton } = this.state;
+        const { isLogged } = this.state;
         return(
             <View style={styles.container}>
                 <Image
@@ -66,8 +66,13 @@ class Login extends Component {
                     <LoginButton
                     readPermissions={["public_profile", "email"]}
                     onLoginFinished={this.handleLoginFiniched}
-                    onLogoutFinished={() => this.setState({isVisibleButton:false})}/>
-                    {isVisibleButton ? <TouchableHighlight
+                    onLogoutFinished={() => this.setState({isLogged:false})}/>
+                    {isLogged ? null: <TouchableHighlight
+                        style={styles.whitoutCount}
+                        onPress={this.handleButtonPress}>
+                        <Text>Continuar sin registrarse</Text>
+                    </TouchableHighlight> }
+                    {isLogged ? <TouchableHighlight
                         onPress={this.handleButtonPress}
                         title="Seguir"
                         style={styles.button}> 
@@ -100,6 +105,12 @@ const styles = StyleSheet.create({
         marginTop: 10,
         backgroundColor: 'white',
         paddingHorizontal: 15
+    },
+    whitoutCount: {
+        backgroundColor: 'white',
+        marginVertical: 16,
+        paddingHorizontal: 10,
+        paddingVertical: 5
     }
 
 });
