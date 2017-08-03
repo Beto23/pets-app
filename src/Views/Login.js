@@ -16,47 +16,66 @@ import FBSDK, {
 
 import { Actions } from "react-native-router-flux";
 
+// Firebase
+import firebase, { firebaseAuth } from '../firebase';
+
+const { FacebookAuthProvider } = firebase.auth;
+
 class Login extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            isLogged: false
+            isLogged: false,
+            credentials: null
         }
     }
 
-    handleLoginFiniched = (error, result) => {
-        console.log('sdfsd')
+    componentWillMount() {
+        this.authenticateUser();
+    }
+
+    authenticateUser = () => {
+        AccessToken.getCurrentAccessToken().then((data) => {
+            if (data) {
+                console.log(data, 'data');
+                const { accessToken } = data;
+                const credential = FacebookAuthProvider.credential(accessToken);
+                firebaseAuth.signInWithCredential(credential).then((credentials) => {
+                    this.setState({ credentials, isLogged: true });
+                    Actions.root({credentials});
+                }).catch( (error) => {
+                    console.log("Sign In Error", error);
+                });
+            } else {
+                if(this.state.isLogged) this.setState({ isLogged: false });
+            }
+        });
+    }
+
+    handleLoginFinished = (error, result) => {
         if (error) {
             console.error(error);
         } else if (result.isCancelled) {
             alert("login is cancelled.");
         } else {
-            AccessToken.getCurrentAccessToken().then(() => {
-                Actions.root();
-                this.setState({isLogged: true});
-            });
+            this.authenticateUser();
         }
-    }
-
-    componentDidMount() {
-        FBSDK.AccessToken.getCurrentAccessToken().then(
-            (data) => {
-                if(data){
-                    Actions.root();
-                    this.setState({isLogged: true});
-                }
-                data ? Actions.root() : null;
-            }
-        )
     }
 
     handleButtonPress = () => {
         Actions.root()
     }
 
+    handleLogOut = () => {
+        this.setState({
+            isLogged:false,
+            credentials: null
+        });
+    }
+
     render(){
-        const { isLogged } = this.state;
+        const { isLogged, credentials } = this.state;
         return(
             <View style={styles.container}>
                 <Image
@@ -64,9 +83,10 @@ class Login extends Component {
                     source={require('../Images/pexels-photo-167085.jpeg')}>
                     <Text style={styles.welcome}>Adopta una Mascota</Text>
                     <LoginButton
-                    readPermissions={["public_profile", "email"]}
-                    onLoginFinished={this.handleLoginFiniched}
-                    onLogoutFinished={() => this.setState({isLogged:false})}/>
+                        readPermissions={["public_profile", "email"]}
+                        onLoginFinished={this.handleLoginFinished}
+                        onLogoutFinished={this.handleLogOut}/>
+                    {credentials ? <Text>{credentials.displayName}</Text> : null}
                     {isLogged ? null: <TouchableHighlight
                         style={styles.whitoutCount}
                         onPress={this.handleButtonPress}>
