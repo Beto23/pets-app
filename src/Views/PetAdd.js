@@ -21,12 +21,12 @@ class PetAdd extends Component {
         this.state = {
             name: '',
             breed: '',
-            gender: ['Macho', 'Hembra'],
-            age: ['Adulto', 'Joven', 'Cachorro'],
+            gender: '',
+            age: '',
             description: '',
             city: '',
             country: '',
-            nam: '',
+            nameContac: '',
             email: '',
             phone: '',
         } 
@@ -48,20 +48,37 @@ class PetAdd extends Component {
         this.setState({age});
     }
 
-    changeContacName(nam) {
-        this.setState({nam});
+    changeContacName(nameContac) {
+        this.setState({nameContac});
     }
 
     changeContacEmail(email) {
         this.setState({email});
+        if(!this.validateEmail(this.state.email)) {
+            console.log('not valid email');
+        } else {
+            console.log('valid email');
+        }
+    }
+
+    validateEmail(email){
+        const reg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return reg.test(email);
     }
 
     changeContacPhone(phone) {
         this.setState({phone});
     }
 
+    changeDescription(description) {
+        this.setState({description});
+    }
+
+    
     handleSend = () => {
-        if(name && age && gender && description && nam && email && phone) {
+        console.log(this.state, 'state')
+        const { name, breed, gender, age, description, nameContac, email, phone  } = this.state;
+        if(name && breed && gender && age && description && nameContac && email && phone) {
             console.warn('Valido');            
         } else {
             console.warn('Invalido');
@@ -87,11 +104,18 @@ class PetAdd extends Component {
                         placeholder="Raza"
                         maxLength={15}
                     />
+                    <TextInput
+                        value = {this.state.description}
+                        onChangeText = {(description) => this.changeDescription(description)}
+                        placeholder="description"
+                        maxLength={150}
+                        multiline={true}
+                    />
                     <Picker
                         selectedValue={this.state.gender}
                         onValueChange={(itemValue, itemIndex) => this.changeGender(itemValue)}>
-                        <Picker.Item label="Macho"/>
-                        <Picker.Item label="Hembra"/>
+                        <Picker.Item label="Macho" value="Macho"/>
+                        <Picker.Item label="Hembra" value="Hembra"/>
                     </Picker>
                     <Picker
                         selectedValue={this.state.age}
@@ -103,8 +127,8 @@ class PetAdd extends Component {
                     <Map /> 
                     <Text>Contactoo</Text>
                     <TextInput
-                        value = {this.state.name}
-                        onChangeText = {(name) => this.changeContacName(name)}
+                        value = {this.state.nameContac}
+                        onChangeText = {(nameContac) => this.changeContacName(nameContac)}
                         placeholder="Nombre"
                         maxLength={15}
                     />
@@ -113,6 +137,7 @@ class PetAdd extends Component {
                         onChangeText = {(email) => this.changeContacEmail(email)}
                         placeholder="Email"
                         maxLength={15}
+                        keyboardType="email-address"
                     />
                     <TextInput
                         value = {this.state.phone}

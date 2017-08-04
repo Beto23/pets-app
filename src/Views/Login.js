@@ -29,6 +29,7 @@ class Login extends Component {
             isLogged: false,
             credentials: null
         }
+        console.ignoredYellowBox = ['Setting a timer'];
     }
 
     componentWillMount() {
