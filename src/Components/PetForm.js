@@ -82,45 +82,47 @@ class PetForm extends Component {
         return(
             <View>
                 <View style={styles.container}>
-                    {/* <PhotoPicker /> */}
-                    <View style={styles.row}>
-                        <TextField
-                            onChangeText={value => this.handleField(value, 'name', validationPet.name, 'nameError')}
-                            onBlur={(value) => this.handleField(value, 'name', validationPet.name, 'nameError')}
-                            error={this.state.nameError}
-                            labelName="Nombre"
-                            width={widthRow}/>
-                        <TextField
-                            onChangeText={value => this.handleField(value, 'breed', validationPet.name, 'breedError')}
-                            onBlur={(value) => this.handleField(value, 'breed', validationPet.name, 'breedError')}
-                            error={this.state.breedError}
-                            labelName="Raza"
-                            width={widthRow}/>
-                    </View>
+                    <PhotoPicker /> 
+                    <View style={styles.containerPadding}>
+                        <View style={styles.row}>
+                            <TextField
+                                onChangeText={value => this.handleField(value, 'name', validationPet.name, 'nameError')}
+                                onBlur={(value) => this.handleField(value, 'name', validationPet.name, 'nameError')}
+                                error={this.state.nameError}
+                                labelName="Nombre"
+                                width={widthRow}/>
+                            <TextField
+                                onChangeText={value => this.handleField(value, 'breed', validationPet.name, 'breedError')}
+                                onBlur={(value) => this.handleField(value, 'breed', validationPet.name, 'breedError')}
+                                error={this.state.breedError}
+                                labelName="Raza"
+                                width={widthRow}/>
+                        </View>
 
-                    <View style={styles.row}>
-                        <TextField
-                            onChangeText={value => this.handleField(value, 'age', validationPet.name, 'ageError')}
-                            onBlur={(value) => this.handleField(value, 'age', validationPet.name, 'ageError')}
-                            error={this.state.ageError}
-                            labelName="Edad"
-                            width={widthRow}/>
-                        <TextField
-                            onChangeText={value => this.handleField(value, 'gender', validationPet.name, 'genderError')}
-                            onBlur={(value) => this.handleField(value, 'gender', validationPet.name, 'genderError')}
-                            error={this.state.genderError}
-                            labelName="Genero"
-                            width={widthRow}/>
-                    </View>
+                        <View style={styles.row}>
+                            <TextField
+                                onChangeText={value => this.handleField(value, 'age', validationPet.name, 'ageError')}
+                                onBlur={(value) => this.handleField(value, 'age', validationPet.name, 'ageError')}
+                                error={this.state.ageError}
+                                labelName="Edad"
+                                width={widthRow}/>
+                            <TextField
+                                onChangeText={value => this.handleField(value, 'gender', validationPet.name, 'genderError')}
+                                onBlur={(value) => this.handleField(value, 'gender', validationPet.name, 'genderError')}
+                                error={this.state.genderError}
+                                labelName="Genero"
+                                width={widthRow}/>
+                        </View>
 
-                    <TextField
-                        onChangeText={value => this.handleField(value, 'description', validationPet.name, 'descriptionError')}
-                        onBlur={(value) => this.handleField(value, 'description', validationPet.name, 'descriptionError')}
-                        error={this.state.descriptionError}
-                        labelName="Descripcion"
-                        multiline={true}
-                        height={100}/>
-                    <View>
+                        <TextField
+                            onChangeText={value => this.handleField(value, 'description', validationPet.name, 'descriptionError')}
+                            onBlur={(value) => this.handleField(value, 'description', validationPet.name, 'descriptionError')}
+                            error={this.state.descriptionError}
+                            labelName="Descripcion"
+                            multiline={true}
+                            height={100}/>
+                    </View>
+                    <View style={styles.containerPadding}>
                         <Text style={{marginBottom: 10}}>Contacto</Text>
                         <View style={styles.row}>
                             <TextField
@@ -145,6 +147,7 @@ class PetForm extends Component {
                             labelName="Email"
                             keyboardType="email-address"/>
                     </View>
+                    <Map/>
                     <View style={styles.submitContainer}>
                         <Button
                             onPress={this.register}
@@ -160,6 +163,8 @@ class PetForm extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    containerPadding: {
         paddingHorizontal: 10
     },
     row: {

@@ -5,6 +5,7 @@ import {
     View,
     Text,
     Image,
+    Button,
     StyleSheet,
     TouchableHighlight
 } from 'react-native';
@@ -59,11 +60,14 @@ class PhotoPicker extends Component {
     render() {
         const { imagePath } = this.state;
         return(
-            <View>
+            <View style={styles.container}>
                 {imagePath ? <Image style={styles.image} source={{uri: imagePath}}/> : null}
-                <TouchableHighlight onPress={this.OpenImagePicker}>
-                    <Text>Open Camera</Text>
-                </TouchableHighlight>
+                <View style={styles.button}>
+                    <Button
+                        onPress={this.OpenImagePicker}
+                        title="Tomar Foto"
+                        color= "#2196F3"/>
+                </View>
             </View>
         )
     }
@@ -71,8 +75,16 @@ class PhotoPicker extends Component {
 
 const styles = StyleSheet.create({
     image: {
-        width: 100,
-        height: 100
+        borderRadius: 100,
+        width: 150,
+        height: 150
+    },
+    container: {
+        alignItems: 'center',
+        marginBottom: 15
+    },
+    button: {
+        marginTop: 15
     }
 });
 

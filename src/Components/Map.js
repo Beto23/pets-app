@@ -34,13 +34,16 @@ class Map extends Component {
             region: {
                 latitude: lat,
                 longitude: lon,
-                latitudeDelta: 1,
-                longitudeDelta: 1    
+                latitudeDelta: 1, // valor real latitudeDelta: latDelta
+                longitudeDelta: 1 // valor real longitudeDelta: lonDelta
             }
         })
     }
 
     componentDidMount() {
+        /** Para funciones en celular real quitar:
+         * {enableHighAccuracy: true, timeout: 10000, maximumAge: 3000}
+         */
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 const lat = position.coords.latitude;
