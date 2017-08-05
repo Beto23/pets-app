@@ -1,7 +1,7 @@
 const validation = {
     name: {
         presence: {
-            message: '^Nombre requerido'
+            message: '^Campo requerido'
         }
     },
     email: {

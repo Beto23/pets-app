@@ -4,11 +4,14 @@ import {
     View,
     Text,
     Button,
+    Dimensions,
     TextInput,
     StyleSheet,
     TouchableHighlight
 } from 'react-native';
 // import validate from 'validate.js'
+const { width } = Dimensions.get('window');
+const widthRow = (width / 2 - 15);
 
 //Components
 import PhotoPicker from './ImagePicker';
@@ -23,8 +26,14 @@ class PetForm extends Component {
         super(props);
         this.state = {
             name: '',
+            breed: '',
+            age: '',
+            gender: '',
+            description: '',
+            nameContact: '',
+            phone: null,
             email: ''
-        } 
+        }
     }
 
     // validateForm = () => {
@@ -74,21 +83,72 @@ class PetForm extends Component {
             <View>
                 <View style={styles.container}>
                     {/* <PhotoPicker /> */}
-                    <TextField
-                        onChangeText={value => this.handleField(value, 'name', validationPet.name, 'nameError')}
-                        onBlur={(value) => this.handleField(value, 'name', validationPet.name, 'nameError')}
-                        error={this.state.nameError}
-                        labelName="Nombre"/>
+                    <View style={styles.row}>
+                        <TextField
+                            onChangeText={value => this.handleField(value, 'name', validationPet.name, 'nameError')}
+                            onBlur={(value) => this.handleField(value, 'name', validationPet.name, 'nameError')}
+                            error={this.state.nameError}
+                            labelName="Nombre"
+                            width={widthRow}/>
+                        <TextField
+                            onChangeText={value => this.handleField(value, 'breed', validationPet.name, 'breedError')}
+                            onBlur={(value) => this.handleField(value, 'breed', validationPet.name, 'breedError')}
+                            error={this.state.breedError}
+                            labelName="Raza"
+                            width={widthRow}/>
+                    </View>
+
+                    <View style={styles.row}>
+                        <TextField
+                            onChangeText={value => this.handleField(value, 'age', validationPet.name, 'ageError')}
+                            onBlur={(value) => this.handleField(value, 'age', validationPet.name, 'ageError')}
+                            error={this.state.ageError}
+                            labelName="Edad"
+                            width={widthRow}/>
+                        <TextField
+                            onChangeText={value => this.handleField(value, 'gender', validationPet.name, 'genderError')}
+                            onBlur={(value) => this.handleField(value, 'gender', validationPet.name, 'genderError')}
+                            error={this.state.genderError}
+                            labelName="Genero"
+                            width={widthRow}/>
+                    </View>
 
                     <TextField
-                        onChangeText={value => this.handleField(value, 'email', validationPet.email, 'emailError')}
-                        onBlur={(value) => this.handleField(value, 'email', validationPet.email, 'emailError')}
-                        error={this.state.emailError}
-                        labelName="Email"/>
-                    <Button
-                        onPress={this.register}
-                        title="Enviar"
-                        color= "#1db954"/>
+                        onChangeText={value => this.handleField(value, 'description', validationPet.name, 'descriptionError')}
+                        onBlur={(value) => this.handleField(value, 'description', validationPet.name, 'descriptionError')}
+                        error={this.state.descriptionError}
+                        labelName="Descripcion"
+                        multiline={true}
+                        height={100}/>
+                    <View>
+                        <Text style={{marginBottom: 10}}>Contacto</Text>
+                        <View style={styles.row}>
+                            <TextField
+                                onChangeText={value => this.handleField(value, 'nameContact', validationPet.name, 'nameContactError')}
+                                onBlur={(value) => this.handleField(value, 'nameContact', validationPet.name, 'nameContactError')}
+                                error={this.state.nameContactError}
+                                labelName="Nombre Contacto"
+                                width={widthRow}/>
+                            <TextField
+                                onChangeText={value => this.handleField(value, 'phone', validationPet.name, 'phoneError')}
+                                onBlur={(value) => this.handleField(value, 'phone', validationPet.name, 'phoneError')}
+                                error={this.state.phoneError}
+                                labelName="Telefono"
+                                width={widthRow}/>
+                        </View>
+
+                        <TextField
+                            onChangeText={value => this.handleField(value, 'email', validationPet.email, 'emailError')}
+                            onBlur={(value) => this.handleField(value, 'email', validationPet.email, 'emailError')}
+                            error={this.state.emailError}
+                            labelName="Email"/>
+                    </View>
+                    <View style={styles.submitContainer}>
+                        <Button
+                            onPress={this.register}
+                            title="Enviar"
+                            color= "#1db954"/>
+                    </View>
                 </View>
             </View>
         )
@@ -99,6 +159,18 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingHorizontal: 10
+    },
+    row: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    inputRow: {
+        width: 15,
+        backgroundColor: 'red'
+    },
+    submitContainer: {
+        marginBottom: 20,
+        marginTop: 10
     }
 });
 

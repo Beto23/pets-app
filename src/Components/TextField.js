@@ -28,15 +28,21 @@ class TextField extends Component {
             <View style={styles.container}>
                 <Text style={styles.label}>{this.props.labelName}</Text>
                 <TextInput
-                    style={[this.props.error ? styles.inputError: null, styles.input]}
+                    style={[
+                        this.props.error ? styles.inputError: null,
+                        styles.input,
+                        {
+                            width: this.props.width,
+                            height: this.props.height ?  this.props.height: 40}
+                    ]}
                     onChangeText={(value) => {
                         this.props.onChangeText(value);
                         this.setState({textValue: value});
                     }}
                     ref="text"
                     onBlur={() => this.props.onBlur(this.state.textValue)}
-                    underlineColorAndroid={this.props.error ? 'red': '#e0e0e0'}
-                    disableFullscreenUI={true}/>
+                    underlineColorAndroid={this.props.error ? 'red': '#000'}
+                    multiline={this.props.multiline}/>
                 {this.error()}
             </View>
         )
