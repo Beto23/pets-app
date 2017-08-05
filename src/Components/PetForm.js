@@ -27,18 +27,44 @@ class PetForm extends Component {
         } 
     }
 
+    // validateForm = () => {
+    //     const nameError = validate('name', this.state.name, validationPet.name)
+    //     const emailError = validate('email', this.state.email, validationPet.email)
+
+    //     this.setState({
+    //         nameError: nameError,
+    //         emailError: emailError
+    //     })
+
+    //     if(!emailError && !nameError) {
+    //         console.log('formulario valido');
+    //         this.setState({isInvalidForm: false});
+    //     } else {
+    //         this.setState({isInvalidForm: true});
+    //     }
+    // }
+
+    handleField = (value, fieldName, validation, error) => {
+        /*
+            new object is crated whit key and value of the field to set in the state
+            ej const fomr = {}; 
+            form: {email: 'email@example.com'}
+        */
+        const fielfValue = {}
+        fielfValue[fieldName] = value;
+        this.setState(fielfValue);
+        /*
+            new object is crated whit key and value of the error to set in the state
+            ej const error = {}; 
+            form: {errorEmail: 'email is required'}
+        */
+        const typeError = {}
+        typeError[error] = validate(fieldName, value, validation);
+        this.setState(typeError);
+    }
+
     register = () => {
-        const nameError = validate('name', this.state.name, validationPet.name);
-        const emailError = validate('email', this.state.email, validationPet.email);
-
-        this.setState({
-            emailError: emailError,
-            nameError: nameError
-        });
-
-        if(!emailError && !nameError) {
-            console.log('formulario valido');
-        }
+        console.log('Enviando a firebase');
     }
 
 
@@ -49,22 +75,14 @@ class PetForm extends Component {
                 <View style={styles.container}>
                     {/* <PhotoPicker /> */}
                     <TextField
-                        onChangeText={value => this.setState({name: value.trim()})}
-                        onBlur={(value) => {
-                            this.setState({
-                                nameError: validate('name', value, validationPet.name)
-                            });
-                        }}
+                        onChangeText={value => this.handleField(value, 'name', validationPet.name, 'nameError')}
+                        onBlur={(value) => this.handleField(value, 'name', validationPet.name, 'nameError')}
                         error={this.state.nameError}
                         labelName="Nombre"/>
 
                     <TextField
-                        onChangeText={value => this.setState({email: value.trim()})}
-                        onBlur={(value) => {
-                            this.setState({
-                                emailError: validate('email', value, validationPet.email)
-                            });
-                        }}
+                        onChangeText={value => this.handleField(value, 'email', validationPet.email, 'emailError')}
+                        onBlur={(value) => this.handleField(value, 'email', validationPet.email, 'emailError')}
                         error={this.state.emailError}
                         labelName="Email"/>
                     <Button
