@@ -134,14 +134,16 @@ class PetForm extends Component {
                                 onBlur={(value) => this.handleField(value, 'phone', validationPet.name, 'phoneError')}
                                 error={this.state.phoneError}
                                 labelName="Telefono"
-                                width={widthRow}/>
+                                width={widthRow}
+                                keyboardType="phone-pad"/>
                         </View>
 
                         <TextField
                             onChangeText={value => this.handleField(value, 'email', validationPet.email, 'emailError')}
                             onBlur={(value) => this.handleField(value, 'email', validationPet.email, 'emailError')}
                             error={this.state.emailError}
-                            labelName="Email"/>
+                            labelName="Email"
+                            keyboardType="email-address"/>
                     </View>
                     <View style={styles.submitContainer}>
                         <Button

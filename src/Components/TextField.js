@@ -42,7 +42,8 @@ class TextField extends Component {
                     ref="text"
                     onBlur={() => this.props.onBlur(this.state.textValue)}
                     underlineColorAndroid={this.props.error ? 'red': '#000'}
-                    multiline={this.props.multiline}/>
+                    multiline={this.props.multiline}
+                    keyboardType={this.props.keyboardType}/>
                 {this.error()}
             </View>
         )
