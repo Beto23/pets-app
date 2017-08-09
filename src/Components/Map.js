@@ -65,7 +65,6 @@ class Map extends Component {
 
     render() {
         const { region } = this.state;
-        console.log(region, 'region')
         return(
             <View style={styles.container}>
                 {region.latitude ? <MapView

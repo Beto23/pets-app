@@ -16,9 +16,6 @@ class Header extends Component {
         super(props);
     }
 
-    componentDidMount() {
-        console.log(this.props);
-    }
     render() {
         return(
             <View style={styles.container}>

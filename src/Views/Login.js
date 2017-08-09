@@ -39,7 +39,7 @@ class Login extends Component {
     authenticateUser = () => {
         AccessToken.getCurrentAccessToken().then((data) => {
             if (data) {
-                console.log(data, 'data');
+                // console.log(data, 'data');
                 const { accessToken } = data;
                 const credential = FacebookAuthProvider.credential(accessToken);
                 firebaseAuth.signInWithCredential(credential).then((credentials) => {

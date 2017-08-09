@@ -20,10 +20,6 @@ class Home extends Component {
     }
   }
 
-  componentDidMount() {
-    console.log(this.state.isOpen);
-  }
-
   handleToggle = () => {
     this.setState({isOpen: !this.state.isOpen});
   }
