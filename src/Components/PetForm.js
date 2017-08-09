@@ -9,7 +9,7 @@ import {
     StyleSheet,
     TouchableHighlight
 } from 'react-native';
-// import validate from 'validate.js'
+
 const { width } = Dimensions.get('window');
 const widthRow = (width / 2 - 15);
 
@@ -19,6 +19,17 @@ import Map from './Map';
 import TextField from './TextField';
 import validationPet from '../shared/petValidation';
 import validate from '../shared/validationWrapper';
+
+import {
+    fieldName,
+    fieldBreed,
+    fieldAge,
+    fieldGender,
+    fieldDescription,
+    fieldNameContact,
+    fieldPhone,
+    fieldEmail,
+} from '../shared/fieldsAddPet';
 
 class PetForm extends Component {
 
@@ -32,26 +43,10 @@ class PetForm extends Component {
             description: '',
             nameContact: '',
             phone: null,
-            email: ''
+            email: '',
+            isInvalidForm: false
         }
     }
-
-    // validateForm = () => {
-    //     const nameError = validate('name', this.state.name, validationPet.name)
-    //     const emailError = validate('email', this.state.email, validationPet.email)
-
-    //     this.setState({
-    //         nameError: nameError,
-    //         emailError: emailError
-    //     })
-
-    //     if(!emailError && !nameError) {
-    //         console.log('formulario valido');
-    //         this.setState({isInvalidForm: false});
-    //     } else {
-    //         this.setState({isInvalidForm: true});
-    //     }
-    // }
 
     handleField = (value, fieldName, validation, error) => {
         /*
@@ -72,13 +67,41 @@ class PetForm extends Component {
         this.setState(typeError);
     }
 
+    componentWillUpdate() {
+        
+    }
+
     register = () => {
-        console.log('Enviando a firebase');
+
+        const nameError = validate(fieldName.nameField, this.state.name, fieldName.validation);        
+        const breedError = validate(fieldBreed.nameField, this.state.breed, fieldBreed.validation);        
+        const ageError = validate(fieldAge.nameField, this.state.age, fieldAge.validation);        
+        const genderError = validate(fieldGender.nameField, this.state.gender, fieldGender.validation);        
+        const descriptionError = validate(fieldGender.nameField, this.state.description, fieldGender.validation);        
+        const nameContactError = validate(fieldNameContact.nameField, this.state.nameContact, fieldNameContact.validation);        
+        const phoneError = validate(fieldPhone.nameField, this.state.phone, fieldPhone.validation);        
+        const emailError = validate(fieldEmail.nameField, this.state.email, fieldEmail.validation);
+
+        this.setState({
+            nameError,
+            breedError,
+            ageError,
+            genderError,
+            descriptionError,
+            nameContactError,
+            phoneError,
+            emailError
+        });
+
+        if (!nameError && !breedError && !ageError && !genderError && !descriptionError && !nameContactError && !phoneError && !emailError) {
+            console.log('form valido');
+        } else {
+            console.log('form invalido');
+        }
     }
 
 
     render() {
-        console.log(this.state);
         return(
             <View>
                 <View style={styles.container}>
@@ -152,7 +175,8 @@ class PetForm extends Component {
                         <Button
                             onPress={this.register}
                             title="Enviar"
-                            color= "#1db954"/>
+                            color= "#1db954"
+                            disabled={this.state.isInvalidForm}/>
                     </View>
                 </View>
             </View>
