@@ -20,6 +20,9 @@ import TextField from './TextField';
 import validationPet from '../shared/petValidation';
 import validate from '../shared/validationWrapper';
 
+//Helper
+import { HelperFormAdd } from '../shared/HelperFormAdd';
+
 import {
     fieldName,
     fieldBreed,
@@ -30,6 +33,7 @@ import {
     fieldPhone,
     fieldEmail,
 } from '../shared/fieldsAddPet';
+import { firebaseAuth } from '../firebase';
 
 class PetForm extends Component {
 
@@ -44,7 +48,19 @@ class PetForm extends Component {
             nameContact: '',
             phone: null,
             email: '',
-            isInvalidForm: false
+            isInvalidForm: false,
+            uid: ''
+        }
+    }
+
+    async componentDidMount() {
+        try {
+            let user = await firebaseAuth.currentUser;
+            this.setState({
+                uid: user.uid
+            })
+        } catch (error) {
+            console.log(error)
         }
     }
 
@@ -65,10 +81,6 @@ class PetForm extends Component {
         const typeError = {}
         typeError[error] = validate(fieldName, value, validation);
         this.setState(typeError);
-    }
-
-    componentWillUpdate() {
-        
     }
 
     register = () => {
@@ -94,9 +106,22 @@ class PetForm extends Component {
         });
 
         if (!nameError && !breedError && !ageError && !genderError && !descriptionError && !nameContactError && !phoneError && !emailError) {
-            console.log('form valido');
+            this.setForm();
         } else {
             console.log('form invalido');
+        }
+    }
+
+    setForm = () => {
+        try {
+            if (this.state.uid) {
+                const { name, breed, age, gender, description, nameContact, phone, email, uid } = this.state;
+                const item = {name, breed, age, gender, description, nameContact, phone, email, uid}
+                HelperFormAdd.addPet(item);
+                console.log('Enviado......');
+            }
+        } catch (error) {
+            console.log(error);
         }
     }
 

@@ -1,13 +1,14 @@
-import validate from './validationWrapper';
-import { fieldName } from './fieldsAddPet';
+import { firebaseDataBase } from '../firebase';
 
 
-class HelperFormAdd {
-    static validateNameError(value) {
-        const { nameField, validation, nameError } = fieldName;
-        return validate(nameField, value, validation, nameError);
+export class HelperFormAdd {
+    // static setPetName(id) {
+    //     let path = `/pet/${id}`;
+    //     firebaseDataBase.ref(path).set(name)
+    // }    
+    static addPet(item) {
+        let path = `/pet/`;
+        firebaseDataBase.ref(path).push(item)
     }
 }
-
-module.exports = HelperFormAdd;
 
