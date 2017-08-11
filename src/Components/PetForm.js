@@ -19,9 +19,11 @@ import Map from './Map';
 import TextField from './TextField';
 import validationPet from '../shared/petValidation';
 import validate from '../shared/validationWrapper';
+import PickerField from './PickerField';
 
 //Helper
 import { HelperFormAdd } from '../shared/HelperFormAdd';
+import { species } from '../shared/itemsArraysForm';
 
 import {
     fieldName,
@@ -41,7 +43,7 @@ class PetForm extends Component {
         super(props);
         this.state = {
             name: '',
-            breed: '',
+            breed: species[0].name,
             age: '',
             gender: '',
             description: '',
@@ -127,6 +129,7 @@ class PetForm extends Component {
 
 
     render() {
+        console.log(this.state, 'state')
         return(
             <View>
                 <View style={styles.container}>
@@ -139,12 +142,19 @@ class PetForm extends Component {
                                 error={this.state.nameError}
                                 labelName="Nombre"
                                 width={widthRow}/>
-                            <TextField
+                            {/* <TextField
                                 onChangeText={value => this.handleField(value, 'breed', validationPet.name, 'breedError')}
                                 onBlur={(value) => this.handleField(value, 'breed', validationPet.name, 'breedError')}
                                 error={this.state.breedError}
                                 labelName="Raza"
-                                width={widthRow}/>
+                                width={widthRow}/> */}
+                            <PickerField
+                                selectedValue={this.state.breed}
+                                onValueChange={(itemValue, itemIndex) => this.handleField(itemValue, 'breed', validationPet.name, 'breedError')}
+                                width={widthRow}
+                                error={this.state.breedError}
+                                label="Especie"
+                                items={species}/>
                         </View>
 
                         <View style={styles.row}>
