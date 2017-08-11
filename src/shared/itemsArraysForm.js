@@ -11,7 +11,7 @@ export const species = [
         id: 3,
         name: "Otro"
     }
-]
+];
 
 export const breedCat = [
     {
@@ -70,7 +70,7 @@ export const breedCat = [
         id: 15,
         name: "Siames"
     },
-]
+];
 
 export const breedDog = [
     {
@@ -301,6 +301,47 @@ export const breedDog = [
         id: 56,
         name:"Terrier"
     },
-]
+];
+
+export const genderPet = [
+    {
+        id: 1,
+        name: "Macho"
+    },
+    {
+        id: 2,
+        name: "Hembra"
+    }
+];
+
+export const size = [
+    {
+        id: 1,
+        name: "Pequeño"
+    },
+    {
+        id: 2,
+        name: "Mediano"
+    },
+    {
+        id: 3,
+        name: "Grande"
+    }  
+];
+
+export const agePet = [
+    {
+        id: 1,
+        name: "Cachorro"
+    },
+    {
+        id: 2,
+        name: "Joven"
+    },
+    {
+        id: 3,
+        name: "Adulto"
+    } 
+];
 
 

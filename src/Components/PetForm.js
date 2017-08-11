@@ -23,11 +23,12 @@ import PickerField from './PickerField';
 
 //Helper
 import { HelperFormAdd } from '../shared/HelperFormAdd';
-import { species, breedDog,breedCat } from '../shared/itemsArraysForm';
+import { species, breedDog, breedCat, genderPet, size, agePet } from '../shared/itemsArraysForm';
 
 import {
     fieldName,
     fieldSpecie,
+    fieldSize,
     fieldBreed,
     fieldAge,
     fieldGender,
@@ -44,10 +45,11 @@ class PetForm extends Component {
         super(props);
         this.state = {
             name: '',
+            size: size[0].name,
             specie: species[0].name,
             breed: breedDog[1].name,
-            age: '',
-            gender: '',
+            age: agePet[0].name,
+            gender: genderPet[0].name,
             description: '',
             nameContact: '',
             phone: null,
@@ -90,7 +92,9 @@ class PetForm extends Component {
     register = () => {
 
         const nameError = validate(fieldName.nameField, this.state.name, fieldName.validation);
-        const specieError = validate(fieldSpecie.nameField, this.state.specie, fieldSpecie.validation);                        
+        const specieError = validate(fieldSpecie.nameField, this.state.specie, fieldSpecie.validation);
+        const sizeError = validate(fieldSize.nameField, this.state.specie, fieldSize.validation);                        
+                        
         // const breedError = validate(fieldBreed.nameField, this.state.breed, fieldBreed.validation);        
         const ageError = validate(fieldAge.nameField, this.state.age, fieldAge.validation);        
         const genderError = validate(fieldGender.nameField, this.state.gender, fieldGender.validation);        
@@ -102,6 +106,7 @@ class PetForm extends Component {
         this.setState({
             nameError,
             specieError,
+            sizeError,
             ageError,
             genderError,
             descriptionError,
@@ -110,7 +115,7 @@ class PetForm extends Component {
             emailError
         });
 
-        if (!nameError && !ageError && !genderError && !descriptionError && !nameContactError && !phoneError && !emailError && !specieError) {
+        if (!nameError && !ageError && !sizeError && !genderError && !descriptionError && !nameContactError && !phoneError && !emailError && !specieError) {
             this.setForm();
         } else {
             console.log('form invalido');
@@ -120,8 +125,8 @@ class PetForm extends Component {
     setForm = () => {
         try {
             if (this.state.uid) {
-                const { name, specie, breed, age, gender, description, nameContact, phone, email, uid } = this.state;
-                const item = {name, specie, breed, age, gender, description, nameContact, phone, email, uid}
+                const { name, specie, size, breed, age, gender, description, nameContact, phone, email, uid } = this.state;
+                const item = {name, specie, size, breed, age, gender, description, nameContact, phone, email, uid}
                 HelperFormAdd.addPet(item);
                 console.log('Enviado......');
             }
@@ -152,7 +157,7 @@ class PetForm extends Component {
                                 onChangeText={value => this.handleField(value, 'name', validationPet.name, 'nameError')}
                                 onBlur={(value) => this.handleField(value, 'name', validationPet.name, 'nameError')}
                                 error={this.state.nameError}
-                                labelName="Nombre" />
+                                labelName="Nombre"/>
                         <View style={styles.row}>
                             <PickerField
                                 selectedValue={this.state.specie}
@@ -171,18 +176,29 @@ class PetForm extends Component {
                         </View>
 
                         <View style={styles.row}>
-                            <TextField
-                                onChangeText={value => this.handleField(value, 'age', validationPet.name, 'ageError')}
-                                onBlur={(value) => this.handleField(value, 'age', validationPet.name, 'ageError')}
+                            <PickerField
+                                selectedValue={this.state.gender}
+                                onValueChange={(itemValue, itemIndex) => this.handleField(itemValue, 'gender', validationPet.name, 'genderError')}
+                                width={widthRow}
+                                error={this.state.specieError}
+                                label="Género"
+                                items={genderPet}/>
+                            <PickerField
+                                selectedValue={this.state.age}
+                                onValueChange={(itemValue, itemIndex) => this.handleField(itemValue, 'age', validationPet.name, 'ageError')}
+                                width={widthRow}
                                 error={this.state.ageError}
-                                labelName="Edad"
-                                width={widthRow}/>
-                            <TextField
-                                onChangeText={value => this.handleField(value, 'gender', validationPet.name, 'genderError')}
-                                onBlur={(value) => this.handleField(value, 'gender', validationPet.name, 'genderError')}
-                                error={this.state.genderError}
-                                labelName="Genero"
-                                width={widthRow}/>
+                                label="Edad"
+                                items={agePet}/>
+                        </View>
+                        <View style={styles.row}>
+                            <PickerField
+                                selectedValue={this.state.size}
+                                onValueChange={(itemValue, itemIndex) => this.handleField(itemValue, 'size', validationPet.name, 'sizeError')}
+                                width={widthRow}
+                                error={this.state.sizeError}
+                                label="Tamaño"
+                                items={size}/>
                         </View>
 
                         <TextField

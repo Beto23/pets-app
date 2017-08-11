@@ -12,6 +12,12 @@ export const fieldSpecie = {
     validation: validationPet.name,
     label: 'Especie'
 };
+export const fieldSize = {
+    nameField: 'size',
+    nameError: 'sizeError',
+    validation: validationPet.name,
+    label: 'Tamaño'
+};
 export const fieldBreed = {
     nameField: 'breed',
     nameError: 'breedError',
