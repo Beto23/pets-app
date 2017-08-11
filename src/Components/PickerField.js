@@ -29,6 +29,8 @@ class PickerField extends Component {
             return this.props.items.map(item => {
                 return <Picker.Item key={item.id} label={item.name} value={item.name} />
             })
+        } else {
+            return <Picker.Item label="" value="" />
         }
     }
 

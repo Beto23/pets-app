@@ -23,10 +23,11 @@ import PickerField from './PickerField';
 
 //Helper
 import { HelperFormAdd } from '../shared/HelperFormAdd';
-import { species } from '../shared/itemsArraysForm';
+import { species, breedDog,breedCat } from '../shared/itemsArraysForm';
 
 import {
     fieldName,
+    fieldSpecie,
     fieldBreed,
     fieldAge,
     fieldGender,
@@ -43,7 +44,8 @@ class PetForm extends Component {
         super(props);
         this.state = {
             name: '',
-            breed: species[0].name,
+            specie: species[0].name,
+            breed: breedDog[1].name,
             age: '',
             gender: '',
             description: '',
@@ -87,8 +89,9 @@ class PetForm extends Component {
 
     register = () => {
 
-        const nameError = validate(fieldName.nameField, this.state.name, fieldName.validation);        
-        const breedError = validate(fieldBreed.nameField, this.state.breed, fieldBreed.validation);        
+        const nameError = validate(fieldName.nameField, this.state.name, fieldName.validation);
+        const specieError = validate(fieldSpecie.nameField, this.state.specie, fieldSpecie.validation);                        
+        // const breedError = validate(fieldBreed.nameField, this.state.breed, fieldBreed.validation);        
         const ageError = validate(fieldAge.nameField, this.state.age, fieldAge.validation);        
         const genderError = validate(fieldGender.nameField, this.state.gender, fieldGender.validation);        
         const descriptionError = validate(fieldGender.nameField, this.state.description, fieldGender.validation);        
@@ -98,7 +101,7 @@ class PetForm extends Component {
 
         this.setState({
             nameError,
-            breedError,
+            specieError,
             ageError,
             genderError,
             descriptionError,
@@ -107,7 +110,7 @@ class PetForm extends Component {
             emailError
         });
 
-        if (!nameError && !breedError && !ageError && !genderError && !descriptionError && !nameContactError && !phoneError && !emailError) {
+        if (!nameError && !ageError && !genderError && !descriptionError && !nameContactError && !phoneError && !emailError && !specieError) {
             this.setForm();
         } else {
             console.log('form invalido');
@@ -117,13 +120,23 @@ class PetForm extends Component {
     setForm = () => {
         try {
             if (this.state.uid) {
-                const { name, breed, age, gender, description, nameContact, phone, email, uid } = this.state;
-                const item = {name, breed, age, gender, description, nameContact, phone, email, uid}
+                const { name, specie, breed, age, gender, description, nameContact, phone, email, uid } = this.state;
+                const item = {name, specie, breed, age, gender, description, nameContact, phone, email, uid}
                 HelperFormAdd.addPet(item);
                 console.log('Enviado......');
             }
         } catch (error) {
             console.log(error);
+        }
+    }
+
+    handleSpecieBreed = () => {
+        if(this.state.specie === species[0].name) {
+            return breedDog;
+        } else if(this.state.specie === species[1].name) {
+            return breedCat;
+        } else {
+            return null;
         }
     }
 
@@ -135,26 +148,26 @@ class PetForm extends Component {
                 <View style={styles.container}>
                     <PhotoPicker /> 
                     <View style={styles.containerPadding}>
-                        <View style={styles.row}>
                             <TextField
                                 onChangeText={value => this.handleField(value, 'name', validationPet.name, 'nameError')}
                                 onBlur={(value) => this.handleField(value, 'name', validationPet.name, 'nameError')}
                                 error={this.state.nameError}
-                                labelName="Nombre"
-                                width={widthRow}/>
-                            {/* <TextField
-                                onChangeText={value => this.handleField(value, 'breed', validationPet.name, 'breedError')}
-                                onBlur={(value) => this.handleField(value, 'breed', validationPet.name, 'breedError')}
-                                error={this.state.breedError}
-                                labelName="Raza"
-                                width={widthRow}/> */}
+                                labelName="Nombre" />
+                        <View style={styles.row}>
                             <PickerField
-                                selectedValue={this.state.breed}
-                                onValueChange={(itemValue, itemIndex) => this.handleField(itemValue, 'breed', validationPet.name, 'breedError')}
+                                selectedValue={this.state.specie}
+                                onValueChange={(itemValue, itemIndex) => this.handleField(itemValue, 'specie', validationPet.name, 'specieError')}
                                 width={widthRow}
-                                error={this.state.breedError}
+                                error={this.state.specieError}
                                 label="Especie"
                                 items={species}/>
+                            <PickerField
+                                selectedValue={this.state.breed}
+                                onValueChange={(itemValue, itemIndex) => this.setState({breed: itemValue})}
+                                width={widthRow}
+                                error=""
+                                label="Raza"
+                                items={this.handleSpecieBreed()}/>
                         </View>
 
                         <View style={styles.row}>
