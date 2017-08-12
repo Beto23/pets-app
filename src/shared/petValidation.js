@@ -4,6 +4,11 @@ const validation = {
             message: '^Campo requerido'
         }
     },
+    photo: {
+        presence: {
+            message: '^Imagen requerida'
+        }
+    },
     email: {
         presence: {
             message: '^Email requerido'

@@ -24,6 +24,10 @@ class PhotoPicker extends Component {
         }
     }
 
+    error() {
+        return this.props.error ? <Text style={styles.error}>{this.props.error}</Text> : null;
+    }
+
     OpenImagePicker = () => {
         const options = {
             title: 'Seleccionar foto',
@@ -37,23 +41,7 @@ class PhotoPicker extends Component {
         }
         ImagePicker.showImagePicker(options, (response) => {
             console.log('Response = ', response);
-
-            if (response.didCancel) {
-                console.log('User cancelled image picker');
-            }
-            else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            }
-            else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton);
-            }
-            else {;
-                this.setState({
-                    imagePath: response.uri,
-                    imageHeight: response.height,
-                    imageWidth: response.width
-                });
-            }
+                response.uri ? this.props.handlePhotoUri(response.uri): null;
         });
     }
 
@@ -68,6 +56,7 @@ class PhotoPicker extends Component {
                         title="Tomar Foto"
                         color= "#2196F3"/>
                 </View>
+                {this.error()}
             </View>
         )
     }
@@ -85,6 +74,9 @@ const styles = StyleSheet.create({
     },
     button: {
         marginTop: 15
+    },
+    error: {
+        color: 'red'
     }
 });
 

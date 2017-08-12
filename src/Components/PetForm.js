@@ -36,6 +36,7 @@ import {
     fieldNameContact,
     fieldPhone,
     fieldEmail,
+    fieldPhoto
 } from '../shared/fieldsAddPet';
 import { firebaseAuth } from '../firebase';
 
@@ -54,7 +55,7 @@ class PetForm extends Component {
             nameContact: '',
             phone: null,
             email: '',
-            isInvalidForm: false,
+            imagePath: '',
             uid: ''
         }
     }
@@ -94,7 +95,7 @@ class PetForm extends Component {
         const nameError = validate(fieldName.nameField, this.state.name, fieldName.validation);
         const specieError = validate(fieldSpecie.nameField, this.state.specie, fieldSpecie.validation);
         const sizeError = validate(fieldSize.nameField, this.state.specie, fieldSize.validation);                        
-                        
+        const photoError = validate(fieldPhoto.nameField, this.state.imagePath, fieldPhoto.validation);                
         // const breedError = validate(fieldBreed.nameField, this.state.breed, fieldBreed.validation);        
         const ageError = validate(fieldAge.nameField, this.state.age, fieldAge.validation);        
         const genderError = validate(fieldGender.nameField, this.state.gender, fieldGender.validation);        
@@ -112,7 +113,8 @@ class PetForm extends Component {
             descriptionError,
             nameContactError,
             phoneError,
-            emailError
+            emailError,
+            photoError
         });
 
         if (!nameError && !ageError && !sizeError && !genderError && !descriptionError && !nameContactError && !phoneError && !emailError && !specieError) {
@@ -145,13 +147,19 @@ class PetForm extends Component {
         }
     }
 
+    handlePhotoUri = (uri) => {
+        uri ? this.setState({imagePath: uri}): null;
+    }
+
 
     render() {
         console.log(this.state, 'state')
         return(
             <View>
                 <View style={styles.container}>
-                    <PhotoPicker /> 
+                    <PhotoPicker
+                        handlePhotoUri={this.handlePhotoUri}
+                        error={this.state.photoError} /> 
                     <View style={styles.containerPadding}>
                             <TextField
                                 onChangeText={value => this.handleField(value, 'name', validationPet.name, 'nameError')}
