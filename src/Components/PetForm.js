@@ -6,9 +6,44 @@ import {
     Button,
     Dimensions,
     TextInput,
+    Platform,
     StyleSheet,
     TouchableHighlight
 } from 'react-native';
+import RNFetchBlob from 'react-native-fetch-blob';
+import { firebaseStorage } from '../firebase';
+
+const Blob = RNFetchBlob.polyfill.Blob;
+const fs = RNFetchBlob.fs;
+
+window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest;
+window.Blob = Blob;
+
+const uploadImage = (uri, imageName, mime = 'image/jpg') => {
+    return new Promise((resolve, reject) => {
+        const uploadUri = Platform.OS === 'ios' ? uri.reaplace('file//', '') : uri;
+        let uploadBlob = null;
+        const imageRef = firebaseStorage.ref('images').child(imageName);
+        fs.readFile(uploadUri, 'base64')
+            .then(data => {
+                return Blob.build(data, {type: `${mime};BASE64`})
+            })
+            .then( blob => {
+                uploadBlob = blob;
+                return imageRef.put(blob, {contentType: mime})
+            })
+            .then(() => {
+                uploadBlob.close();
+                return imageRef.getDownloadURL();
+            })
+            .then(url => {
+                resolve(url);
+            })
+            .catch(error => {
+                reject(error);
+            })
+    })
+}
 
 const { width } = Dimensions.get('window');
 const widthRow = (width / 2 - 15);
@@ -127,10 +162,17 @@ class PetForm extends Component {
     setForm = () => {
         try {
             if (this.state.uid) {
-                const { name, specie, size, breed, age, gender, description, nameContact, phone, email, uid } = this.state;
+                const { name, specie, size, imagePath, breed, age, gender, description, nameContact, phone, email, uid } = this.state;
                 const item = {name, specie, size, breed, age, gender, description, nameContact, phone, email, uid}
-                HelperFormAdd.addPet(item);
-                console.log('Enviado......');
+                uploadImage(imagePath, `${name}${this.state.uid}.jpg`)
+                    .then((responseData) => {
+                        item.imagePath = responseData;
+                    })
+                    .then(() => {
+                        HelperFormAdd.addPet(item);
+                        console.log('Enviado......');
+                    })
+                    .done()
             }
         } catch (error) {
             console.log(error);
@@ -153,7 +195,6 @@ class PetForm extends Component {
 
 
     render() {
-        console.log(this.state, 'state')
         return(
             <View>
                 <View style={styles.container}>

@@ -18,9 +18,7 @@ class PhotoPicker extends Component {
     constructor(props){
         super(props)
         this.state = {
-            imagePath: '',
-            imageHeight: '',
-            imageWidth: ''
+            imagePath: ''
         }
     }
 
@@ -42,6 +40,7 @@ class PhotoPicker extends Component {
         ImagePicker.showImagePicker(options, (response) => {
             console.log('Response = ', response);
                 response.uri ? this.props.handlePhotoUri(response.uri): null;
+                response.uri ? this.setState({imagePath: response.uri}): null;
         });
     }
 
