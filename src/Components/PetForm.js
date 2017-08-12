@@ -10,6 +10,7 @@ import {
     StyleSheet,
     TouchableHighlight
 } from 'react-native';
+import { Actions } from "react-native-router-flux";
 import RNFetchBlob from 'react-native-fetch-blob';
 import { firebaseStorage } from '../firebase';
 
@@ -152,7 +153,7 @@ class PetForm extends Component {
             photoError
         });
 
-        if (!nameError && !ageError && !sizeError && !genderError && !descriptionError && !nameContactError && !phoneError && !emailError && !specieError) {
+        if (!nameError && !photoError && !ageError && !sizeError && !genderError && !descriptionError && !nameContactError && !phoneError && !emailError && !specieError) {
             this.setForm();
         } else {
             console.log('form invalido');
@@ -171,6 +172,7 @@ class PetForm extends Component {
                     .then(() => {
                         HelperFormAdd.addPet(item);
                         console.log('Enviado......');
+                        Actions.Home();
                     })
                     .done()
             }
