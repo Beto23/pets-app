@@ -8,12 +8,13 @@ import {
     TouchableOpacity
 } from 'react-native';
 import { Actions } from "react-native-router-flux";
+import {firebaseDataBase } from '../firebase';
 
 //Components
 import Card from '../Components/Card';
 
 class PetsList extends Component {
-  _keyExtractor = (item, index) => item.id;
+  _keyExtractor = (item, index) => item._key;
 
   constructor(props) {
     super(props);
@@ -23,12 +24,16 @@ class PetsList extends Component {
   }
 
   componentDidMount() {
-    // Simulacion de listado de 500 datos
-    let data = [];
-    for (var index = 0; index <= 500; index++) {
-      data.push({id: index})
-    }
-    this.setState({data: data});
+    const pets = firebaseDataBase.ref('pet');
+    pets.on('value', snapshot => {
+      let data = snapshot.val();
+      const dataWithKeys = Object.keys(data).map(key => {
+        const obj = data[key];
+        obj._key = key;
+        return obj;
+      });
+      this.setState({data: dataWithKeys})
+    })
   }
 
   handleCardClick = () =>{
@@ -41,7 +46,7 @@ class PetsList extends Component {
         <FlatList 
           data={this.state.data}
           keyExtractor={this._keyExtractor}
-          renderItem={(item, key) => <TouchableOpacity onPress={this.handleCardClick}><Card/></TouchableOpacity> }>
+          renderItem={(item, key) => <TouchableOpacity key={key} onPress={() => this.handleCardClick(item.item)}><Card item={item.item}/></TouchableOpacity> }>
         </FlatList>
       </View>
     );

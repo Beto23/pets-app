@@ -10,14 +10,16 @@ import {
 class Card extends Component {
 
   render() {
+      const { imagePath, name, breed, gender, age } = this.props.item;
     return (
             <View style={styles.CardContainer}>
-                <Image style={styles.image} source={{uri: "https://static.pexels.com/photos/58997/pexels-photo-58997.jpeg"}} />
+                <Image style={styles.image} source={{uri: imagePath ? imagePath
+                    : "https://static.pexels.com/photos/58997/pexels-photo-58997.jpeg"  }} />
                 <View style={styles.info}>
-                    <Text style={styles.name}>Beto/Adopción</Text>
+                    <Text style={styles.name}>{name}/Adopción</Text>
                     <View style={styles.infoData}>
-                        <Text>Mestizo/Cruza</Text>
-                        <Text style={styles.count}>Macho/Joven</Text>
+                        <Text>{breed}</Text>
+                        <Text style={styles.count}>{gender}/{age}</Text>
                     </View>
                     <Text style={styles.location}>Saltillo, Coahuila</Text>
                 </View>
