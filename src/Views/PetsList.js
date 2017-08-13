@@ -36,8 +36,8 @@ class PetsList extends Component {
     })
   }
 
-  handleCardClick = () =>{
-    Actions.PetDetail()
+  handleCardClick = (data) =>{
+    Actions.PetDetail({data});
   }
 
   render() {

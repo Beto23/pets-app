@@ -11,6 +11,7 @@ import {
 import Communications from 'react-native-communications';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+//Components
 import Map from '../Components/Map';
 
 class PetDetail extends Component {
@@ -20,67 +21,81 @@ class PetDetail extends Component {
     }
 
     render() {
+        const { age, breed, description, email, gender, imagePath, name, nameContact, phone, size, specie } = this.props.data;
         return(
             <ScrollView>
                 <View style={styles.container}>
                     <View style={styles.imageContainer}>
                         <Image 
                             style={styles.image}
-                            source={{uri: "https://d4n5pyzr6ibrc.cloudfront.net/media/27FB7F0C-9885-42A6-9E0C19C35242B5AC/500F9F07-C391-4312-80465035E37A92EB/thul-d927ae3d-05e8-5b64-9a51-edc20022b2d9.jpg?response-content-disposition=inline"}} />
+                            source={{uri: imagePath}} />
+                    </View>
+                    <View style={{alignItems: 'center'}}>
+                        <Text>{`${specie} en adopción`}</Text>
                     </View>
                     <View style={styles.paddingSection}>
                         <View style={styles.infoRow}>
                             <View style={styles.infoData}>
                                 <Text style={styles.label}>Nombre</Text>
-                                <Text>firulais (Macho)</Text>
+                                <Text>{name}</Text>
                             </View>
                             <View style={styles.infoData}>
                                 <Text style={styles.label}>Raza</Text>
-                                <Text>Mestizo/cruza</Text>
+                                <Text>{breed}</Text>
+                            </View>
+                        </View>
+                        <View style={styles.infoRow}>
+                            <View style={styles.infoData}>
+                                <Text style={styles.label}>Tamaño</Text>
+                                <Text>{size}</Text>
                             </View>
                             <View style={styles.infoData}>
                                 <Text style={styles.label}>Edad</Text>
-                                <Text>1año</Text>
+                                <Text>{age}</Text>
                             </View>
-                        </View> 
+                        </View>  
                     </View>
                     <View style={styles.paddingSection}>
                         <Text style={styles.sectionTitle}>Descripción</Text>
                         <View style={styles.descriptionContainer}>
                             <Text style={styles.description}>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam magnam maiores animi velit asperiores ipsam dolorem eveniet vitae molestias sequi quae iusto dolor molestiae obcaecati, esse illum explicabo aliquam? Ab!
+                                {description}
                             </Text>
                         </View>
                     </View>
                     <View style={styles.paddingSection}>
                         <Text style={styles.sectionTitle}>Contacto</Text>
                         <View style={styles.infoContent}>
-                            <View style={styles.infoData}>
+                            <View>
+                                <View style={{flexDirection: "row", alignItems: "center"}}>
+                                        <Icon name="ios-contact-outline" size={25} color="#373737" />
+                                        <Text style={{marginLeft: 10}}>{nameContact}</Text>
+                                </View>
                                 <TouchableOpacity 
                                     style={{flexDirection: "row", alignItems: "center"}}
-                                    onPress={() => this.handlePhone('8442554476', true)}>
+                                    onPress={() => this.handlePhone(phone, true)}>
                                     <Icon name="ios-call-outline" size={25} color="#373737" />
-                                    <Text style={{marginLeft: 5}}>8442923533</Text>
+                                    <Text style={{marginLeft: 10}}>{phone}</Text>
                                 </TouchableOpacity>
                             </View>
-                            <View style={styles.infoData}>
+                            <View>
                                 <TouchableOpacity
                                     style={{flexDirection: "row", alignItems: "center"}}
-                                    onPress={() => Communications.email(['josee-45@hotmail.com'],null,null,'My Subject','My body text')}>
+                                    onPress={() => Communications.email([email],null,null,'My Subject','My body text')}>
                                     <Icon name="ios-mail-outline" size={25} color="#373737" />
-                                    <Text style={{marginLeft: 5}}>josee-45@hotmail.com</Text>
+                                    <Text style={{marginLeft: 10}}>{email}</Text>
                                 </TouchableOpacity>
                             </View>
-                            <View style={styles.infoData} style={{flexDirection: "row", alignItems: "center"}}>
+                            {/* <View style={{flexDirection: "row", alignItems: "center"}}>
                                     <Icon name="logo-facebook" size={25} color="#373737" />
                                     <Text style={{marginLeft: 5}}>BetoCordobaLugo</Text>
-                            </View>
+                            </View> */}
                         </View>
                     </View>
-                    <View>
+                    {/* <View>
                         <Text style={styles.sectionTitle}>Ubicación</Text>
                         <Map />
-                    </View>
+                    </View> */}
                 </View>
             </ScrollView>
         )
@@ -99,8 +114,11 @@ const styles = StyleSheet.create({
     },
     image: {
         borderRadius: 100,
-        width: 200,
-        height: 200,
+        width: 130,
+        height: 130,
+    },
+    infoData: {
+        width: 100
     },
     infoContent: {
         borderTopWidth: 1,
