@@ -46,6 +46,7 @@ export default class pets extends Component {
 const styles = StyleSheet.create({
   navBar: {
       backgroundColor:'transparent',
+      borderBottomWidth: 0
   },
   navBarTitle:{
       color:'gray'
