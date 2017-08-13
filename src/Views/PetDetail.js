@@ -25,77 +25,58 @@ class PetDetail extends Component {
         return(
             <ScrollView>
                 <View style={styles.container}>
-                    <View style={styles.imageContainer}>
-                        <Image 
-                            style={styles.image}
-                            source={{uri: imagePath}} />
-                    </View>
-                    <View style={{alignItems: 'center'}}>
-                        <Text>{`${specie} en adopción`}</Text>
-                    </View>
-                    <View style={styles.paddingSection}>
-                        <View style={styles.infoRow}>
-                            <View style={styles.infoData}>
-                                <Text style={styles.label}>Nombre</Text>
-                                <Text>{name}</Text>
-                            </View>
-                            <View style={styles.infoData}>
-                                <Text style={styles.label}>Raza</Text>
-                                <Text>{breed}</Text>
-                            </View>
+                    <View style={styles.containerWithColor}>
+                        <View style={styles.imageContainer}>
+                            <Image 
+                                style={styles.image}
+                                source={{uri: imagePath}} />
                         </View>
-                        <View style={styles.infoRow}>
-                            <View style={styles.infoData}>
-                                <Text style={styles.label}>Tamaño</Text>
-                                <Text>{size}</Text>
-                            </View>
-                            <View style={styles.infoData}>
-                                <Text style={styles.label}>Edad</Text>
-                                <Text>{age}</Text>
-                            </View>
-                        </View>  
+                        <View style={{alignItems: 'center'}}>
+                            <Text style={[styles.whiteText, {fontSize: 16, fontWeight: 'bold'}]}>{`${specie} en adopción`}</Text>
+                        </View>
+                        <View style={{alignItems: 'center'}}>
+                            <Text style={styles.whiteText}>{name}</Text>
+                            <Text style={styles.whiteText}>{breed}</Text>
+                            <Text style={styles.whiteText}>{size}</Text>
+                            <Text style={styles.whiteText}>{age}</Text>
+                        </View>
+
                     </View>
                     <View style={styles.paddingSection}>
-                        <Text style={styles.sectionTitle}>Descripción</Text>
-                        <View style={styles.descriptionContainer}>
-                            <Text style={styles.description}>
+                        <Text style={[styles.sectionTitle, styles.label]}>Descripción</Text>
+                        <View>
+                            <Text style={styles.descriptionText}>
                                 {description}
                             </Text>
                         </View>
                     </View>
                     <View style={styles.paddingSection}>
-                        <Text style={styles.sectionTitle}>Contacto</Text>
+                        <Text style={[styles.sectionTitle, styles.label]}>Contacto</Text>
                         <View style={styles.infoContent}>
-                            <View>
-                                <View style={{flexDirection: "row", alignItems: "center"}}>
-                                        <Icon name="ios-contact-outline" size={25} color="#373737" />
+                            <View style={styles.contactContainer}>
+                                <View style={styles.contactIconContainer}>
+                                        <Icon style={{marginRight: 10}} name="md-person" size={25} color="#0084ff" />
                                         <Text style={{marginLeft: 10}}>{nameContact}</Text>
                                 </View>
+                            </View>
+                            <View style={styles.contactContainer}>
                                 <TouchableOpacity 
-                                    style={{flexDirection: "row", alignItems: "center"}}
+                                    style={styles.contactIconContainer}
                                     onPress={() => this.handlePhone(phone, true)}>
-                                    <Icon name="ios-call-outline" size={25} color="#373737" />
+                                    <Icon style={{marginRight: 10}} name="md-call" size={25} color="#0084ff" />
                                     <Text style={{marginLeft: 10}}>{phone}</Text>
                                 </TouchableOpacity>
                             </View>
-                            <View>
+                            <View style={styles.contactContainer}>
                                 <TouchableOpacity
-                                    style={{flexDirection: "row", alignItems: "center"}}
+                                    style={styles.contactIconContainer}
                                     onPress={() => Communications.email([email],null,null,'My Subject','My body text')}>
-                                    <Icon name="ios-mail-outline" size={25} color="#373737" />
+                                    <Icon style={{marginRight: 10}} name="md-mail" size={25} color="#0084ff" />
                                     <Text style={{marginLeft: 10}}>{email}</Text>
                                 </TouchableOpacity>
                             </View>
-                            {/* <View style={{flexDirection: "row", alignItems: "center"}}>
-                                    <Icon name="logo-facebook" size={25} color="#373737" />
-                                    <Text style={{marginLeft: 5}}>BetoCordobaLugo</Text>
-                            </View> */}
                         </View>
                     </View>
-                    {/* <View>
-                        <Text style={styles.sectionTitle}>Ubicación</Text>
-                        <Map />
-                    </View> */}
                 </View>
             </ScrollView>
         )
@@ -104,7 +85,25 @@ class PetDetail extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop: 70,
+        paddingTop: 0,
+    },
+    containerWithColor: {
+        paddingTop: 20,
+        paddingBottom: 10,
+        backgroundColor: '#0084ff',
+    },
+    contactContainer: {
+        marginBottom: 15
+    },
+    contactIconContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginRight: 15
+    },
+    whiteText: {
+        color: '#fff',
+        fontWeight: 'bold',
+        paddingVertical: 5
     },
     paddingSection: {
         paddingHorizontal: 20
@@ -122,7 +121,6 @@ const styles = StyleSheet.create({
     },
     infoContent: {
         borderTopWidth: 1,
-        borderBottomWidth: 1,
         backgroundColor: "white",
         borderColor: "#e0e0e0",
         padding: 15,
@@ -136,13 +134,8 @@ const styles = StyleSheet.create({
         paddingTop: 17,
     },
     label: {
-        color: "black"
-    },
-    descriptionContainer: {
-        backgroundColor: '#e9ebee',
-        padding: 10
-    },
-    sectionTitle: {
+        color: "black",
+        fontWeight: '500',
         paddingVertical: 5
     }
 });
