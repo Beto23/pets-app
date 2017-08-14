@@ -16,12 +16,13 @@ class Card extends Component {
                 <Image style={styles.image} source={{uri: imagePath ? imagePath
                     : "https://static.pexels.com/photos/58997/pexels-photo-58997.jpeg"  }} />
                 <View style={styles.info}>
-                    <Text style={styles.name}>{name}/Adopción</Text>
+                    <Text style={styles.name}>{name}</Text>
                     <View style={styles.infoData}>
                         <Text>{breed}</Text>
-                        <Text style={styles.count}>{gender}/{age}</Text>
+                        <Text style={styles.count}>{gender}</Text>
+                        <Text style={styles.count}>{age}</Text>                        
+                        <Text style={styles.location}>Saltillo, Coahuila</Text>
                     </View>
-                    <Text style={styles.location}>Saltillo, Coahuila</Text>
                 </View>
             </View>
         );
@@ -31,13 +32,15 @@ class Card extends Component {
 const styles = StyleSheet.create({
     image: {
         width: 150,
-        height: 150
+        height: 150,
+        borderRadius: 2
     },
     CardContainer: {
         margin: 5,
+        padding: 10,
         backgroundColor: 'white',
         flexDirection: 'row',
-        elevation: 3, // android
+        // elevation: 3, // android
         shadowColor: 'black', //ios
         shadowOpacity: .2, //ios
         shadowOffset: { //ios
@@ -46,25 +49,21 @@ const styles = StyleSheet.create({
         }
     },
     info: {
+        paddingLeft: 10,
         flex: 1,
-        alignItems: 'center',
         justifyContent: 'center'
     },
     name: {
         fontSize: 17,
-        marginTop: 10,
+        marginTop: 0,
         color: '#333'
     },
     infoData: {
-    alignItems: 'center',
-    marginTop: 12
+        marginTop: 0
     },
     count: {
         color: 'gray'
     },
-    location: {
-        marginTop: 15
-    }
 });
 
 export default Card;

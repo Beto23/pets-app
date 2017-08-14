@@ -55,7 +55,7 @@ class PetsList extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white",
+    backgroundColor: "#e9ebee",
     flex: 1,
     padding: 10
   }
