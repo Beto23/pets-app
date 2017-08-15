@@ -208,8 +208,8 @@ class PetForm extends Component {
     setForm = () => {
         try {
             if (this.state.uid) {
-                const { name, specie, size, imagePath, breed, age, gender, description, nameContact, phone, email, uid } = this.state;
-                const item = {name, specie, size, breed, age, gender, description, nameContact, phone, email, uid}
+                const { name, specie, size, imagePath, breed, age, gender, state, city, description, nameContact, phone, email, uid } = this.state;
+                const item = {name, specie, size, breed, age, gender, state, city, description, nameContact, phone, email, uid}
                 uploadImage(imagePath, `${name}${this.state.uid}.jpg`)
                     .then((responseData) => {
                         item.imagePath = responseData;
