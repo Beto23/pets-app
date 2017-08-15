@@ -31,12 +31,26 @@ export default class pets extends Component {
               key="PetDetail"
               component={PetDetail}
               hideNavBar={false}
-              navigationBarStyle={styles.navBar}
+              navigationBarStyle={styles.navBarDetail}
               titleStyle={styles.navBarTitle}
               leftButtonIconStyle={styles.barButtonIconStyle}/>
-            <Scene key="PetsLostsList" component={PetsLostsList} hideNavBar={false} title="Mascotas Perdidas"/>
+            <Scene
+                key="PetsLostsList"
+                component={PetsLostsList}
+                hideNavBar={false}
+                title="Mascotas Perdidas"
+                navigationBarStyle={styles.navBar}
+                titleStyle={styles.navBarTitle}
+                leftButtonIconStyle={styles.barButtonIconStyle}/>
             <Scene key="PetLostDetail" component={PetLostDetail} hideNavBar={false} title="Detalle de Mascota"/>  
-            <Scene key="PetAdd" component={PetAdd} hideNavBar={false} title="Agregar Mascota"/>            
+            <Scene
+                titleStyle={styles.navBarTitle}
+                leftButtonIconStyle={styles.barButtonIconStyle}
+                navigationBarStyle={styles.navBar}
+                key="PetAdd"
+                component={PetAdd}
+                hideNavBar={false}
+                title="Agregar Mascota"/>            
                       
         </Scene>
       </Router>
@@ -44,19 +58,22 @@ export default class pets extends Component {
 }
 
 const styles = StyleSheet.create({
-  navBar: {
-      backgroundColor:'transparent',
-      borderBottomWidth: 0
-  },
-  navBarTitle:{
-      color:'gray'
-  },
-  titleStyle:{
-      color:'gray'
-  },
-  barButtonIconStyle:{
-      tintColor:'white'
-  },
+    navBar: {
+        backgroundColor: '#0091EA'
+    },
+    navBarDetail: {
+        backgroundColor:'transparent',
+        borderBottomWidth: 0
+    },
+    navBarTitle:{
+        color:'white'
+    },
+    titleStyle:{
+        color:'white'
+    },
+    barButtonIconStyle:{
+        tintColor:'white'
+    },
 });
 
 
