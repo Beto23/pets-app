@@ -267,7 +267,7 @@ class PetForm extends Component {
                                 onChangeText={value => this.handleField(value, 'nameContact', validationPet.name, 'nameContactError')}
                                 onBlur={(value) => this.handleField(value, 'nameContact', validationPet.name, 'nameContactError')}
                                 error={this.state.nameContactError}
-                                labelName="Nombre Contacto"
+                                labelName="Nombre"
                                 width={widthRow}/>
                             <TextField
                                 onChangeText={value => this.handleField(value, 'phone', validationPet.name, 'phoneError')}

@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     containerWithColor: {
         paddingTop: 20,
         paddingBottom: 10,
-        backgroundColor: '#0084ff',
+        backgroundColor: '#0091EA',
     },
     contactContainer: {
         marginBottom: 15

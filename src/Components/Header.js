@@ -22,14 +22,15 @@ class Header extends Component {
                 <TouchableWithoutFeedback onPress={this.props.toggle}>
                     <Icon
                         name="md-menu"
-                        color="black"
+                        color="white"
                         size={27}
                     />
                 </TouchableWithoutFeedback>
-                <Image style={styles.logo} source={require('../Images/pet.png')} />
+                <Text style={{fontWeight: "bold", fontSize: 17, color: "#fff", fontFamily: "Roboto"}}>Mascotas</Text>
+                {/* <Image style={styles.logo} source={require('../Images/pet.png')} /> */}
                 <Icon
                     name="md-search"
-                    color="black"
+                    color="white"
                     size={27}
                 />
             </View>
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
         height: 50,
         alignItems: "center",
         justifyContent: "space-between",
-        backgroundColor: "#fff",
+        backgroundColor: "#0091EA",
         paddingHorizontal: 15,
         // borderBottomWidth: 1,
         // borderColor: "#e0e0e0",

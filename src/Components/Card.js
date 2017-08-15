@@ -18,10 +18,10 @@ class Card extends Component {
                 <View style={styles.info}>
                     <Text style={styles.name}>{name}</Text>
                     <View style={styles.infoData}>
-                        <Text>{breed}</Text>
-                        <Text style={styles.count}>{gender}</Text>
-                        <Text style={styles.count}>{age}</Text>                        
-                        <Text style={styles.location}>Saltillo, Coahuila</Text>
+                        <Text><Text style={styles.label}>Raza:</Text> {breed}</Text>
+                        <Text style={styles.count}><Text style={styles.label}>Genero:</Text> {gender}</Text>
+                        <Text style={styles.count}><Text style={styles.label}>Edad</Text>: {age}</Text>                        
+                        <Text style={styles.location}><Text style={styles.label}>Ciudad:</Text> Saltillo, Coahuila</Text>
                     </View>
                 </View>
             </View>
@@ -31,16 +31,17 @@ class Card extends Component {
 
 const styles = StyleSheet.create({
     image: {
-        width: 150,
-        height: 150,
-        borderRadius: 2
+        width: 100,
+        height: 100,
+        borderRadius: 100
     },
     CardContainer: {
         margin: 5,
-        padding: 10,
+        padding: 5,
+        alignItems: 'center',
         backgroundColor: 'white',
         flexDirection: 'row',
-        // elevation: 3, // android
+        elevation: 1, // android
         shadowColor: 'black', //ios
         shadowOpacity: .2, //ios
         shadowOffset: { //ios
@@ -56,7 +57,8 @@ const styles = StyleSheet.create({
     name: {
         fontSize: 17,
         marginTop: 0,
-        color: '#333'
+        color: '#333',
+        textAlign: 'center'
     },
     infoData: {
         marginTop: 0
@@ -64,6 +66,9 @@ const styles = StyleSheet.create({
     count: {
         color: 'gray'
     },
+    label: {
+        fontWeight: '500'
+    }
 });
 
 export default Card;

@@ -33,6 +33,7 @@ class PetsList extends Component {
         return obj;
       });
       this.setState({data: dataWithKeys})
+      console.log(dataWithKeys);
     })
   }
 
@@ -57,7 +58,8 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#e9ebee",
     flex: 1,
-    padding: 10
+    paddingHorizontal: 10,
+    paddingTop: 10
   }
 })
 
