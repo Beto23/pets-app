@@ -9,7 +9,7 @@ import {
     Image
 } from 'react-native';
 
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 class Header extends Component {
     constructor(props){
@@ -21,16 +21,16 @@ class Header extends Component {
             <View style={styles.container}>
                 <TouchableWithoutFeedback onPress={this.props.toggle}>
                     <Icon
-                        name="bars"
+                        name="md-menu"
                         color="black"
-                        size={25}
+                        size={27}
                     />
                 </TouchableWithoutFeedback>
                 <Image style={styles.logo} source={require('../Images/pet.png')} />
                 <Icon
-                    name="search"
+                    name="md-search"
                     color="black"
-                    size={25}
+                    size={27}
                 />
             </View>
         )
@@ -40,13 +40,14 @@ class Header extends Component {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        height: 60,
+        height: 50,
         alignItems: "center",
         justifyContent: "space-between",
-        backgroundColor: "#f8f8f8",
+        backgroundColor: "#fff",
         paddingHorizontal: 15,
-        borderBottomWidth: 1,
-        borderColor: "#e0e0e0"
+        // borderBottomWidth: 1,
+        // borderColor: "#e0e0e0",
+        elevation: 2
     },
     logo: {
         width: 50,
