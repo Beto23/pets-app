@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { Actions } from "react-native-router-flux";
 import RNFetchBlob from 'react-native-fetch-blob';
-import { firebaseStorage } from '../firebase';
+import { firebaseStorage, firebaseDataBase } from '../firebase';
 
 const Blob = RNFetchBlob.polyfill.Blob;
 const fs = RNFetchBlob.fs;
@@ -56,6 +56,7 @@ import TextField from './TextField';
 import validationPet from '../shared/petValidation';
 import validate from '../shared/validationWrapper';
 import PickerField from './PickerField';
+import PickerFieldV2 from './pickerFieldV2';
 
 //Helper
 import { HelperFormAdd } from '../shared/HelperFormAdd';
@@ -92,11 +93,55 @@ class PetForm extends Component {
             phone: null,
             email: '',
             imagePath: '',
+            state: '',
+            states: '',
+            city: '',
+            cities: '',
             uid: ''
         }
     }
 
-    async componentDidMount() {
+    componentDidMount() {
+        this.setCurrentUser();
+        this.fillStateCity(5);
+        console.log('entro cdm');
+    }
+
+    objectToArray(snapshotValue) {
+        let data = snapshotValue;
+        return dataWithKeys = Object.keys(data).map(key => {
+            const obj = data[key];
+            obj.id = key;
+            return obj;
+        });
+    }
+
+    fillStateCity = (state_id) => {
+        const statesMex = firebaseDataBase.ref(`states/mx`);
+        statesMex.once( 'value', snapshot => {
+            const data = this.objectToArray(snapshot.val());
+            this.setState({states: data});
+        })
+    }
+
+    handleSelectState = (state) => {
+        console.log('handle state', state)
+        this.setState({state});
+        this.getCities(state)
+    }
+
+    getCities = (state_id) => {
+        const citiesRef = firebaseDataBase.ref(`cities/mx/${state_id}`);
+        citiesRef.once('value', snapshot => {
+            const data = this.objectToArray(snapshot.val());
+            this.setState({
+                cities: data,
+                city: data[0].id
+            });
+        })   
+    }
+
+    async setCurrentUser () {
         try {
             let user = await firebaseAuth.currentUser;
             this.setState({
@@ -197,6 +242,7 @@ class PetForm extends Component {
 
 
     render() {
+        console.log(this.state);
         return(
             <View>
                 <View style={styles.container}>
@@ -204,12 +250,12 @@ class PetForm extends Component {
                         handlePhotoUri={this.handlePhotoUri}
                         error={this.state.photoError} /> 
                     <View style={styles.containerPadding}>
-                            <TextField
+                           <TextField
                                 onChangeText={value => this.handleField(value, 'name', validationPet.name, 'nameError')}
                                 onBlur={(value) => this.handleField(value, 'name', validationPet.name, 'nameError')}
                                 error={this.state.nameError}
                                 labelName="Nombre"/>
-                        <View style={styles.row}>
+                         <View style={styles.row}>
                             <PickerField
                                 selectedValue={this.state.specie}
                                 onValueChange={(itemValue, itemIndex) => this.handleField(itemValue, 'specie', validationPet.name, 'specieError')}
@@ -224,9 +270,9 @@ class PetForm extends Component {
                                 error=""
                                 label="Raza"
                                 items={this.handleSpecieBreed()}/>
-                        </View>
+                        </View>    
 
-                        <View style={styles.row}>
+                         <View style={styles.row}>
                             <PickerField
                                 selectedValue={this.state.gender}
                                 onValueChange={(itemValue, itemIndex) => this.handleField(itemValue, 'gender', validationPet.name, 'genderError')}
@@ -250,15 +296,30 @@ class PetForm extends Component {
                                 error={this.state.sizeError}
                                 label="Tamaño"
                                 items={size}/>
+                        </View> 
+
+                        <View style={styles.row}>
+                            <PickerFieldV2
+                                selectedValue={this.state.state}
+                                onValueChange={(itemValue, itemIndex) => this.handleSelectState(itemValue)}
+                                width={widthRow}
+                                label="Estado"
+                                items={this.state.states}/>
+                            <PickerFieldV2
+                                selectedValue={this.state.city}
+                                onValueChange={(itemValue, itemIndex) => this.setState({city: itemValue})}
+                                width={widthRow}
+                                label="Ciudad"
+                                items={this.state.cities}/>
                         </View>
 
-                        <TextField
+                         <TextField
                             onChangeText={value => this.handleField(value, 'description', validationPet.name, 'descriptionError')}
                             onBlur={(value) => this.handleField(value, 'description', validationPet.name, 'descriptionError')}
                             error={this.state.descriptionError}
                             labelName="Descripcion"
                             multiline={true}
-                            height={100}/>
+                            height={100}/> 
                     </View>
                     <View style={styles.containerPadding}>
                         <Text style={{marginBottom: 10}}>Contacto</Text>
