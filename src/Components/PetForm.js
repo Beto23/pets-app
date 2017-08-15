@@ -93,9 +93,15 @@ class PetForm extends Component {
             phone: null,
             email: '',
             imagePath: '',
-            state: '',
+            state: {
+                name: '',
+                id: ''
+            },
             states: '',
-            city: '',
+            city: {
+                name: '',
+                city_id: ''
+            },
             cities: '',
             uid: ''
         }
@@ -103,8 +109,7 @@ class PetForm extends Component {
 
     componentDidMount() {
         this.setCurrentUser();
-        this.fillStateCity(5);
-        console.log('entro cdm');
+        this.fillStateCity();
     }
 
     objectToArray(snapshotValue) {
@@ -116,7 +121,7 @@ class PetForm extends Component {
         });
     }
 
-    fillStateCity = (state_id) => {
+    fillStateCity = () => {
         const statesMex = firebaseDataBase.ref(`states/mx`);
         statesMex.once( 'value', snapshot => {
             const data = this.objectToArray(snapshot.val());
@@ -125,9 +130,28 @@ class PetForm extends Component {
     }
 
     handleSelectState = (state) => {
-        console.log('handle state', state)
-        this.setState({state});
-        this.getCities(state)
+        firebaseDataBase.ref(`states/mx/${state}`)
+            .once('value', snapshot => {
+                this.setState({
+                    state: {
+                        name: snapshot.val().name,
+                        id: state
+                    }
+                })
+            })
+            .then(() => this.getCities(state))
+    }
+
+    handleSelectCity = (city) => {
+        firebaseDataBase.ref(`cities/mx/${this.state.state.id}/${city}`)
+            .once('value', snapshot => {
+                this.setState({
+                    city: {
+                        name: snapshot.val().name,
+                        id: city
+                    }
+                })
+            })
     }
 
     getCities = (state_id) => {
@@ -136,7 +160,10 @@ class PetForm extends Component {
             const data = this.objectToArray(snapshot.val());
             this.setState({
                 cities: data,
-                city: data[0].id
+                city: {
+                    name: data[0].name,
+                    city_id: data[0].id
+                }
             });
         })   
     }
@@ -242,7 +269,6 @@ class PetForm extends Component {
 
 
     render() {
-        console.log(this.state);
         return(
             <View>
                 <View style={styles.container}>
@@ -300,14 +326,14 @@ class PetForm extends Component {
 
                         <View style={styles.row}>
                             <PickerFieldV2
-                                selectedValue={this.state.state}
+                                selectedValue={this.state.state.id}
                                 onValueChange={(itemValue, itemIndex) => this.handleSelectState(itemValue)}
                                 width={widthRow}
                                 label="Estado"
                                 items={this.state.states}/>
                             <PickerFieldV2
-                                selectedValue={this.state.city}
-                                onValueChange={(itemValue, itemIndex) => this.setState({city: itemValue})}
+                                selectedValue={this.state.city.id}
+                                onValueChange={(itemValue, itemIndex) => this.handleSelectCity(itemValue)}
                                 width={widthRow}
                                 label="Ciudad"
                                 items={this.state.cities}/>

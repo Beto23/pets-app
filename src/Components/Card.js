@@ -10,7 +10,7 @@ import {
 class Card extends Component {
 
   render() {
-      const { imagePath, name, breed, gender, age } = this.props.item;
+      const { imagePath, name, breed, gender, age, state, city } = this.props.item;
     return (
             <View style={styles.CardContainer}>
                 <Image style={styles.image} source={{uri: imagePath ? imagePath
@@ -21,7 +21,8 @@ class Card extends Component {
                         <Text><Text style={styles.label}>Raza:</Text> {breed}</Text>
                         <Text style={styles.count}><Text style={styles.label}>Genero:</Text> {gender}</Text>
                         <Text style={styles.count}><Text style={styles.label}>Edad</Text>: {age}</Text>                        
-                        <Text style={styles.location}><Text style={styles.label}>Ciudad:</Text> Saltillo, Coahuila</Text>
+                        <Text style={styles.location}>
+                            <Text style={styles.label}>Ciudad:</Text> {city ? city.name : ''}, {state ? state.name : ''}</Text>
                     </View>
                 </View>
             </View>

@@ -33,7 +33,6 @@ class PetsList extends Component {
         return obj;
       });
       this.setState({data: dataWithKeys})
-      console.log(dataWithKeys);
     })
   }
 
