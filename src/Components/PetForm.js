@@ -233,6 +233,7 @@ class PetForm extends Component {
     }
 
     setForm = () => {
+        const { isLostPet } = this.props;
         try {
             if (this.state.uid) {
                 const { name, specie, size, imagePath, breed, age, gender, state, city, description, nameContact, phone, email, uid } = this.state;
@@ -242,7 +243,7 @@ class PetForm extends Component {
                         item.imagePath = responseData;
                     })
                     .then(() => {
-                        HelperFormAdd.addPet(item);
+                        isLostPet ? HelperFormAdd.addLostPet(item) : HelperFormAdd.addPet(item);
                         console.log('Enviado......');
                         Actions.Home();
                     })

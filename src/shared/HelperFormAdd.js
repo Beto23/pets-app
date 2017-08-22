@@ -10,5 +10,9 @@ export class HelperFormAdd {
         let path = `/pet/`;
         firebaseDataBase.ref(path).push(item)
     }
+    static addLostPet(item) {
+        let path = `/petLost/`;
+        firebaseDataBase.ref(path).push(item)
+    }
 }
 
