@@ -16,6 +16,16 @@ import Map from '../Components/Map';
 
 class PetDetail extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            typeDetail: {
+                lost: "Perdido",
+                adop: "en Adopción"
+            }
+        }
+    }
+
     handlePhone = (phone, promp) => {
         Communications.phonecall(phone, promp)
     }
@@ -32,7 +42,10 @@ class PetDetail extends Component {
                                 source={{uri: imagePath}} />
                         </View>
                         <View style={{alignItems: 'center'}}>
-                            <Text style={[styles.whiteText, {fontSize: 16, fontWeight: 'bold'}]}>{`${specie} en adopción`}</Text>
+                            <Text
+                                style={[styles.whiteText, {fontSize: 16, fontWeight: 'bold'}]}>
+                                {specie} {this.props.isPetLost ? this.state.typeDetail.lost : this.state.typeDetail.adop}
+                            </Text>
                         </View>
                         <View style={{alignItems: 'center'}}>
                             <Text style={styles.whiteText}>{name}</Text>
@@ -81,6 +94,10 @@ class PetDetail extends Component {
             </ScrollView>
         )
     }
+}
+
+PetDetail.defaultProps = {
+    isPetLost: false
 }
 
 const styles = StyleSheet.create({

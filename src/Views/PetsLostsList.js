@@ -8,13 +8,13 @@ import {
     FlatList
 } from 'react-native';
 import { Actions } from "react-native-router-flux";
-
+import { firebaseDataBase } from '../firebase';
 
 //Components
-import CardDescription from '../Components/CardDescription';
+import Card from '../Components/Card';
 
 class PetsLostsList extends Component {
-    _keyExtractor = (item, index) => item.id;
+    _keyExtractor = (item, index) => item._key;
 
     constructor(props) {
         super(props);
@@ -23,23 +23,27 @@ class PetsLostsList extends Component {
         }
     }
 
-    componentDidMount() {
-        // Simulacion de listado de 10 datos
-        let data = [];
-        for (var index = 0; index <= 10; index++) {
-            data.push({id: index})
-        }
-        this.setState({data: data});
-    }
+  componentDidMount() {
+    const pets = firebaseDataBase.ref('petLost');
+    pets.on('value', snapshot => {
+      let data = snapshot.val();
+      const dataWithKeys = Object.keys(data).map(key => {
+        const obj = data[key];
+        obj._key = key;
+        return obj;
+      });
+      this.setState({data: dataWithKeys})
+    })
+  }
 
-    handleClick = (item) => {
-        Actions.PetLostDetail({item})
+    handleClick = (data) => {
+        Actions.PetDetail({data, isPetLost: true});
     }
 
     renderItem (item) {
         return(
-            <TouchableOpacity onPress={(item) =>this.handleClick(item.item)}>
-                <CardDescription/>
+            <TouchableOpacity onPress={() => this.handleClick(item.item)}>
+                <Card item={item.item}/>
             </TouchableOpacity>
         )
     }
@@ -50,7 +54,7 @@ class PetsLostsList extends Component {
                 <FlatList 
                     data={this.state.data}
                     keyExtractor={this._keyExtractor}
-                    renderItem={(item, key) => this.renderItem(item) }>
+                    renderItem={(item) => this.renderItem(item) }>
                 </FlatList>
             </View>
         )
