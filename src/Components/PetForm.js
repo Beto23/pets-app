@@ -57,6 +57,7 @@ import validationPet from '../shared/petValidation';
 import validate from '../shared/validationWrapper';
 import PickerField from './PickerField';
 import PickerFieldV2 from './pickerFieldV2';
+import MyDatePicker from './DatePicker';
 
 //Helper
 import { HelperFormAdd } from '../shared/HelperFormAdd';
@@ -103,7 +104,8 @@ class PetForm extends Component {
                 city_id: ''
             },
             cities: '',
-            uid: ''
+            uid: '',
+            date: ''
         }
     }
 
@@ -236,13 +238,14 @@ class PetForm extends Component {
         const { isLostPet } = this.props;
         try {
             if (this.state.uid) {
-                const { name, specie, size, imagePath, breed, age, gender, state, city, description, nameContact, phone, email, uid } = this.state;
-                const item = {name, specie, size, breed, age, gender, state, city, description, nameContact, phone, email, uid}
+                const { name, specie, size, imagePath, breed, age, gender, state, city, description, nameContact, phone, email, date, uid } = this.state;
+                const item = {name, specie, size, breed, age, gender, state, city, description, nameContact, phone, email, date, uid}
                 uploadImage(imagePath, `${name}${this.state.uid}.jpg`)
                     .then((responseData) => {
                         item.imagePath = responseData;
                     })
                     .then(() => {
+                        console.log(item);
                         isLostPet ? HelperFormAdd.addLostPet(item) : HelperFormAdd.addPet(item);
                         console.log('Enviado......');
                         Actions.Home();
@@ -324,6 +327,9 @@ class PetForm extends Component {
                                 error={this.state.sizeError}
                                 label="Tamaño"
                                 items={size}/>
+                            <MyDatePicker
+                                handleDate={(date) =>  this.setState({date})}
+                                width={widthRow} />
                         </View> 
 
                         <View style={styles.row}>
