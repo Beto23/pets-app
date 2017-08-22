@@ -6,5 +6,9 @@ export const menuPaths = [
   {
     id: 2,
     name: "Mascotas Perdidas"
+  },
+  {
+    id: 3,
+    name: "Publicar Mascota Perdida"
   }
 ]

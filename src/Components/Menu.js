@@ -34,6 +34,8 @@ class Menu extends Component {
             case 2:
                 Actions.PetsLostsList();
                 break;
+            case 3:
+                Actions.PetLostAdd();
             default:
                 break;
         }

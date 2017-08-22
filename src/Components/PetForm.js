@@ -269,6 +269,7 @@ class PetForm extends Component {
 
 
     render() {
+        const { isLostPet } = this.props;
         return(
             <View>
                 <View style={styles.container}>
@@ -372,7 +373,9 @@ class PetForm extends Component {
                             labelName="Email"
                             keyboardType="email-address"/>
                     </View>
-                    <Map/>
+                    {
+                       isLostPet ? <Map/> : null
+                    }
                     <View style={styles.submitContainer}>
                         <Button
                             onPress={this.register}
@@ -384,6 +387,10 @@ class PetForm extends Component {
             </View>
         )
     }
+}
+
+PetForm.defaultProps = {
+    isLostPet: false
 }
 
 const styles = StyleSheet.create({

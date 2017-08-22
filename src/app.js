@@ -18,6 +18,7 @@ import PetDetail from './Views/PetDetail';
 import PetsLostsList from './Views/PetsLostsList';
 import PetLostDetail from './Views/PetLostDetail';
 import PetAdd from './Views/PetAdd';
+import PetLostAdd from './Views/PetLostAdd';
 
 export default class pets extends Component {
 
@@ -50,7 +51,15 @@ export default class pets extends Component {
                 key="PetAdd"
                 component={PetAdd}
                 hideNavBar={false}
-                title="Agregar Mascota"/>            
+                title="Agregar Mascota"/>
+            <Scene
+                titleStyle={styles.navBarTitle}
+                leftButtonIconStyle={styles.barButtonIconStyle}
+                navigationBarStyle={styles.navBar}
+                key="PetLostAdd"
+                component={PetLostAdd}
+                hideNavBar={false}
+                title="Mascota Perdida"/>            
                       
         </Scene>
       </Router>
