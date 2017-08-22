@@ -245,7 +245,6 @@ class PetForm extends Component {
                         item.imagePath = responseData;
                     })
                     .then(() => {
-                        console.log(item);
                         isLostPet ? HelperFormAdd.addLostPet(item) : HelperFormAdd.addPet(item);
                         console.log('Enviado......');
                         Actions.Home();

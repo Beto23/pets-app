@@ -7,14 +7,15 @@ import {
     Text
 } from 'react-native';
 import DatePicker from 'react-native-datepicker'
+import moment from 'moment';
 
 class MyDatePicker extends Component {
     constructor(props) {
         super(props)
         this.state = {
             date: '',
-            minDate: "2016-05-01",
-            today: new Date()
+            minDate: "01-05-2016",
+            today: moment(new Date()).format('DD-MM-YYYY')
         }
     }
 
@@ -36,9 +37,9 @@ class MyDatePicker extends Component {
                     date = {this.state.date}
                     mode = "date"
                     placeholder = ""
-                    format = "YYYY-MM-DD"
+                    format = "DD-MM-YYYY"
                     minDate = {this.state.minDate}
-                    maxDate = {new Date()}
+                    maxDate = {this.state.today}
                     confirmBtnText = "Ok"
                     cancelBtnText = "Cancelar"
                     showIcon={false}
