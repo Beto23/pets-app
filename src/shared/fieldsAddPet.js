@@ -66,6 +66,18 @@ export const fieldEmail = {
   validation: validationPet.email,
   label: 'Email',
 };
+export const fieldStreet = {
+  nameField: 'street',
+  nameError: 'streetError',
+  validation: validationPet.name,
+  label: 'Calle',
+};
+export const fieldNeighborhood = {
+  nameField: 'neighborhood',
+  nameError: 'neighborhoodError',
+  validation: validationPet.name,
+  label: 'Colónia',
+};
 export const fields = [
   fieldName,
   fieldBreed,

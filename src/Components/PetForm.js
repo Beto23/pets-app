@@ -38,6 +38,8 @@ import {
   fieldPhone,
   fieldEmail,
   fieldPhoto,
+  fieldNeighborhood,
+  fieldStreet,
 } from '../shared/fieldsAddPet';
 
 const Blob = RNFetchBlob.polyfill.Blob;
@@ -98,6 +100,8 @@ class PetForm extends Component {
       cities: '',
       uid: '',
       date: '',
+      neighborhood: '',
+      street: '',
     };
   }
 
@@ -135,8 +139,13 @@ class PetForm extends Component {
       const { isLostPet } = this.props;
       try {
         if (this.state.uid) {
-          const { name, specie, size, imagePath, breed, age, gender, state, city, description, nameContact, phone, email, date, uid } = this.state;
+          const { name, specie, size, imagePath, breed, age, gender, street, neighborhood, state, city,
+            description, nameContact, phone, email, date, uid } = this.state;
           const item = { name, specie, size, breed, age, gender, state, city, description, nameContact, phone, email, date, uid };
+          if (isLostPet) {
+            item.street = street;
+            item.neighborhood = neighborhood;
+          }
           uploadImage(imagePath, `${name}${this.state.uid}.jpg`)
             .then((responseData) => {
               item.imagePath = responseData;
@@ -188,6 +197,8 @@ class PetForm extends Component {
       const nameContactError = validate(fieldNameContact.nameField, this.state.nameContact, fieldNameContact.validation);        
       const phoneError = validate(fieldPhone.nameField, this.state.phone, fieldPhone.validation);        
       const emailError = validate(fieldEmail.nameField, this.state.email, fieldEmail.validation);
+      const streetError = validate(fieldStreet.nameField, this.state.street, fieldStreet.validation);
+      const neighborhoodError = validate(fieldNeighborhood.nameField, this.state.neighborhood, fieldNeighborhood.validation);      
 
       this.setState({
         nameError,
@@ -200,10 +211,12 @@ class PetForm extends Component {
         phoneError,
         emailError,
         photoError,
+        streetError,
+        neighborhoodError,
       });
 
       if (!nameError && !photoError && !ageError && !sizeError && !genderError && 
-          !descriptionError && !nameContactError && !phoneError && !emailError && !specieError) {
+          !descriptionError && !nameContactError && !phoneError && !emailError && !specieError && !neighborhoodError && !streetError) {
         this.setForm();
       } else {
         console.log('form invalido');
@@ -333,22 +346,46 @@ class PetForm extends Component {
                   width={widthRow}
                 />
               </View> 
+              <View>
+                <Text style={{ marginBottom: 10 }}>Ubicación</Text>                
+                <View style={styles.row}>
+                  <PickerFieldV2
+                    selectedValue={this.state.state.id}
+                    onValueChange={(itemValue) => this.handleSelectState(itemValue)}
+                    width={widthRow}
+                    label="Estado"
+                    items={this.state.states}
+                  />
+                  <PickerFieldV2
+                    selectedValue={this.state.city.id}
+                    onValueChange={(itemValue) => this.handleSelectCity(itemValue)}
+                    width={widthRow}
+                    label="Ciudad"
+                    items={this.state.cities}
+                  />
+                </View>
 
-              <View style={styles.row}>
-                <PickerFieldV2
-                  selectedValue={this.state.state.id}
-                  onValueChange={(itemValue) => this.handleSelectState(itemValue)}
-                  width={widthRow}
-                  label="Estado"
-                  items={this.state.states}
-                />
-                <PickerFieldV2
-                  selectedValue={this.state.city.id}
-                  onValueChange={(itemValue) => this.handleSelectCity(itemValue)}
-                  width={widthRow}
-                  label="Ciudad"
-                  items={this.state.cities}
-                />
+                {
+                  isLostPet ? <View style={styles.row}>
+                    <TextField
+                      onChangeText={value => this.handleField(value,
+                        fieldNeighborhood.nameField, fieldNeighborhood.validation, fieldNeighborhood.nameError)}
+                      onBlur={(value) => this.handleField(value, fieldNeighborhood.nameField,
+                        fieldNeighborhood.validation, fieldNeighborhood.nameError)}
+                      error={this.state.neighborhoodError}
+                      labelName="Direccion"
+                      width={widthRow}
+                    />
+                    <TextField
+                      onChangeText={value => this.handleField(value, fieldStreet.nameField, validationPet.name, fieldStreet.nameError)}
+                      onBlur={(value) => this.handleField(value, fieldStreet.nameField, validationPet.name, fieldStreet.nameError)}
+                      error={this.state.streettError}
+                      labelName="Calle"
+                      width={widthRow}
+                    />
+                  </View> : null
+                }
+
               </View>
 
               <TextField
