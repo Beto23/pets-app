@@ -1,82 +1,81 @@
-//Dependecies
+// Dependecies
 import React, { Component } from 'react';
 
 import {
-    View,
-    Text,
-    Image,
-    Button,
-    StyleSheet,
-    TouchableHighlight
+  View,
+  Text,
+  Image,
+  Button,
+  StyleSheet,
 } from 'react-native';
 
-var ImagePicker = require('react-native-image-picker');
-
+const ImagePicker = require('react-native-image-picker');
 
 class PhotoPicker extends Component {
-    
-    constructor(props){
-        super(props)
-        this.state = {
-            imagePath: ''
-        }
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      imagePath: '',
+    };
+  }
 
-    error() {
-        return this.props.error ? <Text style={styles.error}>{this.props.error}</Text> : null;
-    }
+  error() {
+    return this.props.error ? <Text style={styles.error}>{this.props.error}</Text> : null;
+  }
 
     OpenImagePicker = () => {
-        const options = {
-            title: 'Seleccionar foto',
-            storeOptions: {
-                cameraRoll: true
-            },
-            cancelButtonTitle: 'Cancelar',
-            takePhotoButtonTitle: 'Tomar Foto...',
-            chooseFromLibraryButtonTitle: 'Elegir de galeria',
-            mediaType: 'photo'
+      const options = {
+        title: 'Seleccionar foto',
+        storeOptions: {
+          cameraRoll: true,
+        },
+        cancelButtonTitle: 'Cancelar',
+        takePhotoButtonTitle: 'Tomar Foto...',
+        chooseFromLibraryButtonTitle: 'Elegir de galeria',
+        mediaType: 'photo',
+      };
+      ImagePicker.showImagePicker(options, (response) => {
+        if (response.uri) {
+          this.props.handlePhotoUri(response.uri);
+          this.setState({ imagePath: response.uri });
         }
-        ImagePicker.showImagePicker(options, (response) => {
-            console.log('Response = ', response);
-                response.uri ? this.props.handlePhotoUri(response.uri): null;
-                response.uri ? this.setState({imagePath: response.uri}): null;
-        });
+      });
     }
 
     render() {
-        const { imagePath } = this.state;
-        return(
-            <View style={styles.container}>
-                {imagePath ? <Image style={styles.image} source={{uri: imagePath}}/> : null}
-                <View style={styles.button}>
-                    <Button
-                        onPress={this.OpenImagePicker}
-                        title="Tomar Foto"
-                        color= "#2196F3"/>
-                </View>
-                {this.error()}
-            </View>
-        )
+      const { imagePath } = this.state;
+      return (
+        <View style={styles.container}>
+          {imagePath ? <Image style={styles.image} source={{ uri: imagePath }} /> : null}
+          <View style={styles.button}>
+            <Button
+              onPress={this.OpenImagePicker}
+              title="Tomar Foto"
+              color="#2196F3"
+            />
+          </View>
+          {this.error()}
+        </View>
+      );
     }
 }
 
 const styles = StyleSheet.create({
-    image: {
-        borderRadius: 100,
-        width: 150,
-        height: 150
-    },
-    container: {
-        alignItems: 'center',
-        marginBottom: 15
-    },
-    button: {
-        marginTop: 15
-    },
-    error: {
-        color: 'red'
-    }
+  image: {
+    borderRadius: 100,
+    width: 150,
+    height: 150,
+  },
+  container: {
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  button: {
+    marginTop: 15,
+  },
+  error: {
+    color: 'red',
+  },
 });
 
 export default PhotoPicker;
