@@ -1,44 +1,43 @@
 import React, { Component } from 'react';
 import {
-    View,
-    Text,
-    StyleSheet
+  View,
+  StyleSheet,
 } from 'react-native';
 import SideMenu from 'react-native-side-menu';
 
-//Components
+// Components
 import Header from '../Components/Header';
 import Menu from '../Components/Menu';
 import PetList from './PetsList';
 
 class Home extends Component {
-
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-      isOpen: false
-    }
+      isOpen: false,
+    };
   }
 
   handleToggle = () => {
-    this.setState({isOpen: !this.state.isOpen});
+    this.setState({ isOpen: !this.state.isOpen });
   }
 
-  updateMenu(isOpen){
-    this.setState({isOpen})
+  updateMenu(isOpen) {
+    this.setState({ isOpen });
   }
 
   closeMenu = () => {
-    this.setState({isOpen: false})
+    this.setState({ isOpen: false });
   }
 
   render() {
     return (
       <View style={styles.container}>
         <SideMenu
-          menu={<Menu closeMenu={this.closeMenu}/>}
+          menu={<Menu closeMenu={this.closeMenu} />}
           isOpen={this.state.isOpen}
-          onChange={(isOpen) => this.updateMenu(isOpen)}>
+          onChange={(isOpen) => this.updateMenu(isOpen)}
+        >
           <Header toggle={this.handleToggle} />
           <PetList />
         </SideMenu>
@@ -46,7 +45,6 @@ class Home extends Component {
     );
   }
 }
-
 
 const styles = StyleSheet.create({
   container: {
