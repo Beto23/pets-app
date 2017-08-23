@@ -1,14 +1,14 @@
 export const menuPaths = [
   {
     id: 1,
-    name: "Publicar Mascota"
+    name: 'Publicar Mascota',
   },
   {
     id: 2,
-    name: "Mascotas Perdidas"
+    name: 'Mascotas Perdidas',
   },
   {
     id: 3,
-    name: "Publicar Mascota Perdida"
-  }
-]
+    name: 'Publicar Mascota Perdida',
+  },
+];

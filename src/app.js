@@ -4,13 +4,12 @@
  * @flow
  */
 
-//Dependiencies
+// Dependiencies
 import React, { Component } from 'react';
 import { AppRegistry, StyleSheet } from 'react-native';
-import {Scene, Router} from 'react-native-router-flux';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { Scene, Router } from 'react-native-router-flux';
 
-//Views
+// Views
 import Login from './Views/Login';
 import Home from './Views/Home';
 import PetList from './Views/PetsList';
@@ -21,69 +20,73 @@ import PetAdd from './Views/PetAdd';
 import PetLostAdd from './Views/PetLostAdd';
 
 export default class pets extends Component {
-
   render() {
-    return <Router>
+    return (
+      <Router>
         <Scene key="Login" component={Login} hideNavBar />        
         <Scene key="root">
-            <Scene key="Home" component={Home} hideNavBar />
-            <Scene key="PetList" component={PetList} hideNavBar />
-            <Scene
-              key="PetDetail"
-              component={PetDetail}
-              hideNavBar={false}
-              navigationBarStyle={styles.navBarDetail}
-              titleStyle={styles.navBarTitle}
-              leftButtonIconStyle={styles.barButtonIconStyle}/>
-            <Scene
-                key="PetsLostsList"
-                component={PetsLostsList}
-                hideNavBar={false}
-                title="Mascotas Perdidas"
-                navigationBarStyle={styles.navBar}
-                titleStyle={styles.navBarTitle}
-                leftButtonIconStyle={styles.barButtonIconStyle}/>
-            <Scene key="PetLostDetail" component={PetLostDetail} hideNavBar={false} title="Detalle de Mascota"/>  
-            <Scene
-                titleStyle={styles.navBarTitle}
-                leftButtonIconStyle={styles.barButtonIconStyle}
-                navigationBarStyle={styles.navBar}
-                key="PetAdd"
-                component={PetAdd}
-                hideNavBar={false}
-                title="Agregar Mascota"/>
-            <Scene
-                titleStyle={styles.navBarTitle}
-                leftButtonIconStyle={styles.barButtonIconStyle}
-                navigationBarStyle={styles.navBar}
-                key="PetLostAdd"
-                component={PetLostAdd}
-                hideNavBar={false}
-                title="Mascota Perdida"/>            
+          <Scene key="Home" component={Home} hideNavBar />
+          <Scene key="PetList" component={PetList} hideNavBar />
+          <Scene
+            key="PetDetail"
+            component={PetDetail}
+            hideNavBar={false}
+            navigationBarStyle={styles.navBarDetail}
+            titleStyle={styles.navBarTitle}
+            leftButtonIconStyle={styles.barButtonIconStyle}
+          />
+          <Scene
+            key="PetsLostsList"
+            component={PetsLostsList}
+            hideNavBar={false}
+            title="Mascotas Perdidas"
+            navigationBarStyle={styles.navBar}
+            titleStyle={styles.navBarTitle}
+            leftButtonIconStyle={styles.barButtonIconStyle}
+          />
+          <Scene key="PetLostDetail" component={PetLostDetail} hideNavBar={false} title="Detalle de Mascota" />  
+          <Scene
+            titleStyle={styles.navBarTitle}
+            leftButtonIconStyle={styles.barButtonIconStyle}
+            navigationBarStyle={styles.navBar}
+            key="PetAdd"
+            component={PetAdd}
+            hideNavBar={false}
+            title="Agregar Mascota"
+          />
+          <Scene
+            titleStyle={styles.navBarTitle}
+            leftButtonIconStyle={styles.barButtonIconStyle}
+            navigationBarStyle={styles.navBar}
+            key="PetLostAdd"
+            component={PetLostAdd}
+            hideNavBar={false}
+            title="Mascota Perdida"
+          />            
                       
         </Scene>
       </Router>
+    );
   }
 }
 
 const styles = StyleSheet.create({
-    navBar: {
-        backgroundColor: '#0091EA'
-    },
-    navBarDetail: {
-        backgroundColor:'transparent',
-        borderBottomWidth: 0
-    },
-    navBarTitle:{
-        color:'white'
-    },
-    titleStyle:{
-        color:'white'
-    },
-    barButtonIconStyle:{
-        tintColor:'white'
-    },
+  navBar: {
+    backgroundColor: '#0091EA',
+  },
+  navBarDetail: {
+    backgroundColor: 'transparent',
+    borderBottomWidth: 0,
+  },
+  navBarTitle: {
+    color: 'white',
+  },
+  titleStyle: {
+    color: 'white',
+  },
+  barButtonIconStyle: {
+    tintColor: 'white',
+  },
 });
-
 
 AppRegistry.registerComponent('pets', () => pets);

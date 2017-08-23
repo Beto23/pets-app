@@ -1,15 +1,13 @@
-import validation from 'validate.js'
+import validation from 'validate.js';
 
 export default function validate(fieldName, value, fieldConstraint) {
   // Validate.js validates your values as an object
   // e.g. var form = {email: 'email@example.com'}
   // Line 8-9 creates an object based on the field name and field value
-  var formValues = {}
+  const formValues = {};
   formValues[fieldName] = value;
 
-
-
-  var formFields = {}
+  const formFields = {};
   formFields[fieldName] = fieldConstraint;
 
   const result = validation(formValues, formFields);
@@ -20,5 +18,5 @@ export default function validate(fieldName, value, fieldConstraint) {
     return result[fieldName][0];
   }
 
-  return null
+  return null;
 }
