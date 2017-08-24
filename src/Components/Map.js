@@ -98,7 +98,7 @@ class Map extends Component {
     const { neighborhood, street, state, city } = this.props;
     return (
       <View style={styles.container}>
-        <View>
+        {region.latitude ? <View>
           <Text>
             {neighborhood ? `${neighborhood},` : null}
             {street ? `${street},` : null}
@@ -106,7 +106,8 @@ class Map extends Component {
             {state ? `${state},` : null}
           </Text>
           <Button title="Localizar" onPress={this.handleSearch} disabled={this.handleButtonDisabled()} />
-        </View>
+        </View> : null}
+
         {region.latitude ? <MapView
           ref={(ref) => { this.mapRef = ref; }}
           style={styles.map}

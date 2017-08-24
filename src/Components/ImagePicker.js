@@ -9,6 +9,8 @@ import {
   StyleSheet,
 } from 'react-native';
 
+import Icon from 'react-native-vector-icons/Ionicons';
+
 const ImagePicker = require('react-native-image-picker');
 
 class PhotoPicker extends Component {
@@ -48,6 +50,7 @@ class PhotoPicker extends Component {
         <View style={styles.container}>
           {imagePath ? <Image style={styles.image} source={{ uri: imagePath }} /> : null}
           <View style={styles.button}>
+            <Icon name="md-camera" size={30} color="#000" />
             <Button
               onPress={this.OpenImagePicker}
               title="Tomar Foto"
@@ -71,6 +74,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   button: {
+    alignItems: 'center',
     marginTop: 15,
   },
   error: {
