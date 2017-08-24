@@ -346,27 +346,40 @@ class PetForm extends Component {
                   width={widthRow}
                 />
               </View> 
-              <View>
-                <Text style={{ marginBottom: 10 }}>Ubicación</Text>                
-                <View style={styles.row}>
-                  <PickerFieldV2
-                    selectedValue={this.state.state.id}
-                    onValueChange={(itemValue) => this.handleSelectState(itemValue)}
-                    width={widthRow}
-                    label="Estado"
-                    items={this.state.states}
-                  />
-                  <PickerFieldV2
-                    selectedValue={this.state.city.id}
-                    onValueChange={(itemValue) => this.handleSelectCity(itemValue)}
-                    width={widthRow}
-                    label="Ciudad"
-                    items={this.state.cities}
-                  />
-                </View>
+              <TextField
+                onChangeText={value => this.handleField(value, 'description', validationPet.name, 'descriptionError')}
+                onBlur={(value) => this.handleField(value, 'description', validationPet.name, 'descriptionError')}
+                error={this.state.descriptionError}
+                labelName="Descripcion"
+                multiline
+                height={100}
+              /> 
+            </View>
+            {/* Seccion de ubicacion  */}
+            <View>
+              <Text style={{ marginBottom: 10, paddingHorizontal: 10 }}>
+                {isLostPet ? 'Lugar de perdida' : 'Ubicación'}  
+              </Text>               
+              <View style={[styles.row, styles.containerPadding]}>
+                <PickerFieldV2
+                  selectedValue={this.state.state.id}
+                  onValueChange={(itemValue) => this.handleSelectState(itemValue)}
+                  width={widthRow}
+                  label="Estado"
+                  items={this.state.states}
+                />
+                <PickerFieldV2
+                  selectedValue={this.state.city.id}
+                  onValueChange={(itemValue) => this.handleSelectCity(itemValue)}
+                  width={widthRow}
+                  label="Ciudad"
+                  items={this.state.cities}
+                />
+              </View>
 
-                {
-                  isLostPet ? <View style={styles.row}>
+              {
+                isLostPet ? <View>
+                  <View style={[styles.row, styles.containerPadding]}>
                     <TextField
                       onChangeText={value => this.handleField(value,
                         fieldNeighborhood.nameField, fieldNeighborhood.validation, fieldNeighborhood.nameError)}
@@ -383,20 +396,17 @@ class PetForm extends Component {
                       labelName="Calle"
                       width={widthRow}
                     />
-                  </View> : null
-                }
-
-              </View>
-
-              <TextField
-                onChangeText={value => this.handleField(value, 'description', validationPet.name, 'descriptionError')}
-                onBlur={(value) => this.handleField(value, 'description', validationPet.name, 'descriptionError')}
-                error={this.state.descriptionError}
-                labelName="Descripcion"
-                multiline
-                height={100}
-              /> 
+                  </View>
+                  <Map
+                    street={this.state.street}
+                    neighborhood={this.state.neighborhood}
+                    state={this.state.state.name}
+                    city={this.state.city.name}
+                  />
+                </View> : null
+              }
             </View>
+            {/* Seccion de Contacto  */}
             <View style={styles.containerPadding}>
               <Text style={{ marginBottom: 10 }}>Contacto</Text>
               <View style={styles.row}>
@@ -425,9 +435,6 @@ class PetForm extends Component {
                 keyboardType="email-address"
               />
             </View>
-            {
-              isLostPet ? <Map /> : null
-            }
             <View style={styles.submitContainer}>
               <Button
                 onPress={this.register}
