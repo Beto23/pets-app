@@ -140,11 +140,12 @@ class PetForm extends Component {
       try {
         if (this.state.uid) {
           const { name, specie, size, imagePath, breed, age, gender, street, neighborhood, state, city,
-            description, nameContact, phone, email, date, uid } = this.state;
+            description, nameContact, phone, email, date, uid, region } = this.state;
           const item = { name, specie, size, breed, age, gender, state, city, description, nameContact, phone, email, date, uid };
           if (isLostPet) {
             item.street = street;
             item.neighborhood = neighborhood;
+            item.region = region;
           }
           uploadImage(imagePath, `${name}${this.state.uid}.jpg`)
             .then((responseData) => {
@@ -183,6 +184,17 @@ class PetForm extends Component {
       const typeError = {};
       typeError[error] = validate(fieldNameForm, value, validation);
       this.setState(typeError);
+    }
+
+    handleMap = (lat, lng, latDelta, lngDelta) => {
+      this.setState({
+        region: {
+          latitude: lat,
+          longitude: lng,
+          latitudeDelta: latDelta,
+          longitudeDelta: lngDelta,
+        },
+      });
     }
 
     register = () => {
@@ -281,6 +293,7 @@ class PetForm extends Component {
     }
     render() {
       const { isLostPet } = this.props;
+      console.log(this.state.region);
       return (
         <View>
           <View style={styles.container}>
@@ -398,6 +411,7 @@ class PetForm extends Component {
                     />
                   </View>
                   <Map
+                    handleMap={this.handleMap}
                     street={this.state.street}
                     neighborhood={this.state.neighborhood}
                     state={this.state.state.name}

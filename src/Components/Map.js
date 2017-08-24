@@ -36,17 +36,20 @@ class Map extends Component {
     */
     navigator.geolocation.getCurrentPosition(
       (position) => {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
         this.setState({
           region: {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
+            latitude: lat,
+            longitude: lng,
             latitudeDelta: LATITUDE_DELTA,
             longitudeDelta: LONGITUDE_DELTA,
           },
         });
+        this.props.handleMap(lat, lng, LATITUDE_DELTA, LONGITUDE_DELTA);
       },
       (error) => console.log(error, 'error'),
-      { enableHighAccuracy: true, timeout: 10000, maximumAge: 3000 }
+      // { enableHighAccuracy: true, timeout: 10000, maximumAge: 3000 }
     );
 
     // setTimeout(() => {
@@ -67,14 +70,17 @@ class Map extends Component {
       .then(data => data.results[0])
       .then(result => result.geometry)
       .then(geometry => {
+        const lat = geometry.location.lat;
+        const lng = geometry.location.lng;
         this.setState({
           region: {
-            latitude: geometry.location.lat,
-            longitude: geometry.location.lng,
-            latitudeDelta: 0.0922,
-            longitudeDelta: (0.0922 * ASPECT_RATIO),
+            latitude: lat,
+            longitude: lng,
+            latitudeDelta: LATITUDE_DELTA,
+            longitudeDelta: LONGITUDE_DELTA,
           },
         });
+        this.props.handleMap(lat, lng, LATITUDE_DELTA, LONGITUDE_DELTA);
       })
       .catch(error => console.log(error, 'error'));    
   }
