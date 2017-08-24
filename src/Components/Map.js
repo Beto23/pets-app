@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 
 import {
   View,
+  Text,
+  Button,
   Dimensions,
   StyleSheet,
 } from 'react-native';
@@ -12,6 +14,8 @@ import { getLocationAddres } from '../shared/apiMap';
 
 const { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
+const LATITUDE_DELTA = 0.0922;
+const LONGITUDE_DELTA = (LATITUDE_DELTA * ASPECT_RATIO);
 
 class Map extends Component {
   constructor(props) {
@@ -30,7 +34,36 @@ class Map extends Component {
     /** Para funciones en celular real quitar:
         * {enableHighAccuracy: true, timeout: 10000, maximumAge: 3000}
     */
-    getLocationAddres()
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.setState({
+          region: {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            latitudeDelta: LATITUDE_DELTA,
+            longitudeDelta: LONGITUDE_DELTA,
+          },
+        });
+      },
+      (error) => console.log(error, 'error'),
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 3000 }
+    );
+
+    // setTimeout(() => {
+    //   this.mapRef.fitToSuppliedMarkers(['marker1'], true);
+    // }, 3000);
+  }
+
+  marker() {
+    return {
+      latitude: this.state.region.latitude,
+      longitude: this.state.region.longitude,
+    };
+  }
+
+  handleSearch = () => {
+    const { neighborhood, street, state, city } = this.props;
+    getLocationAddres(neighborhood, street, state, city)
       .then(data => data.results[0])
       .then(result => result.geometry)
       .then(geometry => {
@@ -43,23 +76,31 @@ class Map extends Component {
           },
         });
       })
-      .catch(error => console.log(error, 'error'));
-    setTimeout(() => {
-      this.mapRef.fitToSuppliedMarkers(['marker1'], true);
-    }, 2000);
+      .catch(error => console.log(error, 'error'));    
   }
 
-  marker() {
-    return {
-      latitude: this.state.region.latitude,
-      longitude: this.state.region.longitude,
-    };
+  handleButtonDisabled = () => {
+    const { neighborhood, street, state, city } = this.props;
+    if (neighborhood && street && state && city) {
+      return false;
+    }
+    return true;
   }
 
   render() {
     const { region } = this.state;
+    const { neighborhood, street, state, city } = this.props;
     return (
       <View style={styles.container}>
+        <View>
+          <Text>
+            {neighborhood ? `${neighborhood},` : null}
+            {street ? `${street},` : null}
+            {city ? `${city},` : null}
+            {state ? `${state},` : null}
+          </Text>
+          <Button title="Localizar" onPress={this.handleSearch} disabled={this.handleButtonDisabled()} />
+        </View>
         {region.latitude ? <MapView
           ref={(ref) => { this.mapRef = ref; }}
           style={styles.map}
@@ -68,8 +109,7 @@ class Map extends Component {
           <MapView.Marker
             identifier="marker1"
             coordinate={this.marker()}
-            title="Mascota"
-            description="Dalmata perdida"
+            title="Mascota Perdida"
             onDragEnd={(e) => console.log('moviendo', e.nativeEvent.coordinate)}
           />
           <MapView.Circle
