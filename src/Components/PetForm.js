@@ -7,6 +7,7 @@ import {
   Dimensions,
   Platform,
   StyleSheet,
+  ActivityIndicator,
 } from 'react-native';
 
 import { Actions } from 'react-native-router-flux';
@@ -102,6 +103,8 @@ class PetForm extends Component {
       date: '',
       neighborhood: '',
       street: '',
+      isButtonDisabled: false,
+      isShowLoader: false,
     };
   }
 
@@ -139,6 +142,7 @@ class PetForm extends Component {
       const { isLostPet } = this.props;
       try {
         if (this.state.uid) {
+          this.setState({ isShowLoader: true });
           const { name, specie, size, imagePath, breed, age, gender, street, neighborhood, state, city,
             description, nameContact, phone, email, date, uid, region } = this.state;
           const item = { name, specie, size, breed, age, gender, state, city, description, nameContact, phone, email, date, uid };
@@ -154,11 +158,13 @@ class PetForm extends Component {
             .then(() => {
               if (isLostPet) {
                 HelperFormAdd.addLostPet(item);
+                this.setState({ isShowLoader: false });
+                Actions.PetsLostsList();                
               } else {
                 HelperFormAdd.addPet(item);
+                this.setState({ isShowLoader: false });
+                Actions.Home();
               }
-              console.log('Enviado......');
-              Actions.Home();
             })
             .done();
         }
@@ -198,6 +204,7 @@ class PetForm extends Component {
     }
 
     register = () => {
+      this.setState({ isButtonDisabled: true });              
       const nameError = validate(fieldName.nameField, this.state.name, fieldName.validation);
       const specieError = validate(fieldSpecie.nameField, this.state.specie, fieldSpecie.validation);
       const sizeError = validate(fieldSize.nameField, this.state.specie, fieldSize.validation);                        
@@ -231,6 +238,7 @@ class PetForm extends Component {
           !descriptionError && !nameContactError && !phoneError && !emailError && !specieError && !neighborhoodError && !streetError) {
         this.setForm();
       } else {
+        this.setState({ isButtonDisabled: false });
         console.log('form invalido');
       }
     }
@@ -449,12 +457,20 @@ class PetForm extends Component {
                 keyboardType="email-address"
               />
             </View>
+            {
+              this.setState.isShowLoader ? <View style={{ alignItems: 'center' }}>
+                <ActivityIndicator />
+                <Text>
+                  Enviando...
+                </Text>
+              </View> : null
+            }
             <View style={styles.submitContainer}>
               <Button
                 onPress={this.register}
                 title="Enviar"
                 color="#1db954"
-                disabled={this.state.isInvalidForm}
+                disabled={this.state.isButtonDisabled}
               />
             </View>
           </View>
