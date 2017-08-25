@@ -179,10 +179,6 @@ class PetForm extends Component {
       }
     }
 
-    _orientationDidChange(orientation) {
-      console.log(orientation);
-    }
-
     handleField = (value, fieldNameForm, validation, error) => {
       /*
             new object is crated whit key and value of the field to set in the state
@@ -311,7 +307,6 @@ class PetForm extends Component {
     }
     render() {
       const { isLostPet } = this.props;
-      console.log(this.state.region);
       return (
         <View>
           <View style={styles.container}>
