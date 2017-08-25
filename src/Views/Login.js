@@ -4,8 +4,9 @@ import {
   View,
   Text,
   Image,
+  Button,
   StyleSheet,
-  TouchableHighlight,
+  ActivityIndicator,
 } from 'react-native';
 
 import {
@@ -24,8 +25,10 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLogged: false,
       credentials: null,
+      isShowLoader: false, 
+      isShowButtonNext: false,
+      isShowButtonNextWhitout: false,
     };
     console.ignoredYellowBox = ['Setting a timer'];
   }
@@ -36,21 +39,33 @@ class Login extends Component {
 
     authenticateUser = () => {
       AccessToken.getCurrentAccessToken().then((data) => {
+        this.setState({ isShowLoader: true });
         if (data) {
-          // console.log(data, 'data');
           const { accessToken } = data;
           const credential = FacebookAuthProvider.credential(accessToken);
           firebaseAuth.signInWithCredential(credential).then((credentials) => {
-            this.setState({ credentials, isLogged: true });
+            this.setState({
+              credentials,
+              isShowLoader: false,
+              isShowButtonNext: true,
+              isShowButtonNextWhitout: false,
+            });
             Actions.root({ credentials });
           }).catch((error) => {
             console.log('Sign In Error', error);
           });
-        } else if (this.state.isLogged) this.setState({ isLogged: false });
+        } else {
+          this.setState({
+            isShowLoader: false,
+            isShowButtonNextWhitout: true,
+            isShowButtonNext: false,
+          });
+        }
       });
     }
 
     handleLoginFinished = (error, result) => {
+      this.setState({ isShowButtonNextWhitout: false });
       if (error) {
         console.error(error);
       } else if (result.isCancelled) {
@@ -66,13 +81,15 @@ class Login extends Component {
 
     handleLogOut = () => {
       this.setState({
-        isLogged: false,
+        isShowButtonNext: false,
+        isShowButtonNextWhitout: true,
         credentials: null,
       });
     }
 
     render() {
-      const { isLogged, credentials } = this.state;
+      const { credentials, isShowButtonNext, isShowButtonNextWhitout } = this.state;
+      console.log(credentials);
       return (
         <View style={styles.container}>
           <Image
@@ -80,25 +97,25 @@ class Login extends Component {
             source={require('../Images/pexels-photo-167085.jpeg')}
           >
             <Text style={styles.welcome}>Adopta una Mascota</Text>
-            <LoginButton
-              readPermissions={['public_profile', 'email']}
-              onLoginFinished={this.handleLoginFinished}
-              onLogoutFinished={this.handleLogOut} 
-            />
-            {credentials ? <Text>{credentials.displayName}</Text> : null}
-            {isLogged ? null : <TouchableHighlight
-              style={styles.whitoutCount}
-              onPress={this.handleButtonPress}
-            >
-              <Text>Continuar sin registrarse</Text>
-            </TouchableHighlight> }
-            {isLogged ? <TouchableHighlight
-              onPress={this.handleButtonPress}
-              title="Seguir"
-              style={styles.button}
-            > 
-              <Text>Seguir</Text> 
-            </TouchableHighlight> : null}
+            { this.state.isShowLoader ? <ActivityIndicator /> : null}
+            {
+              credentials ? null : <LoginButton
+                readPermissions={['public_profile', 'email']}
+                onLoginFinished={this.handleLoginFinished}
+                onLogoutFinished={this.handleLogOut} 
+              />
+            }
+            {credentials ? <View>
+              <Text style={styles.name}>{credentials.displayName}</Text>
+              <Image style={styles.imageFacebook} source={{ uri: credentials.photoURL }} />
+            </View> : null}
+            {isShowButtonNextWhitout ? <View style={{ marginTop: 20 }}>
+              <Button title='Continuar sin registrarse' onPress={this.handleButtonPress} color="#b7b7b7" />
+            </View> : null }
+
+            {isShowButtonNext ? <View style={{ marginTop: 20 }}>
+              <Button title='Seguir' onPress={this.handleButtonPress} color="#b7b7b7" />
+            </View> : null}
           </Image>
         </View>
       );
@@ -116,6 +133,21 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgray',
     alignItems: 'center',
     justifyContent: 'center', 
+  },
+  imageFacebook: {
+    width: 60,
+    height: 60,
+    borderRadius: 100,
+    alignSelf: 'center',
+  },
+  name: {
+    color: '#fff',
+    fontSize: 17,
+    backgroundColor: 'rgba(165, 165, 165, 0.52)',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    marginBottom: 10,
+    borderRadius: 5,
   },
   welcome: {
     fontSize: 20,
