@@ -12,6 +12,7 @@ import {
 
 import { Actions } from 'react-native-router-flux';
 import RNFetchBlob from 'react-native-fetch-blob';
+import Orientation from 'react-native-orientation';
 import { firebaseStorage, firebaseDataBase, firebaseAuth } from '../firebase';
 
 // Components
@@ -109,8 +110,13 @@ class PetForm extends Component {
   }
 
   componentDidMount() {
+    Orientation.lockToPortrait();
     this.setCurrentUser();
     this.fillStateCity();
+  }
+
+  componentWillUnmount() {
+    Orientation.unlockAllOrientations();
   }
 
     getCities = (stateId) => {
@@ -171,6 +177,10 @@ class PetForm extends Component {
       } catch (error) {
         console.log(error);
       }
+    }
+
+    _orientationDidChange(orientation) {
+      console.log(orientation);
     }
 
     handleField = (value, fieldNameForm, validation, error) => {

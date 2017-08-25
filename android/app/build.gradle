@@ -133,6 +133,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-orientation')
     compile project(':react-native-fetch-blob')
     compile (project(':react-native-fbsdk')){
         exclude(group: 'com.facebook.android', module: 'facebook-android-sdk')
