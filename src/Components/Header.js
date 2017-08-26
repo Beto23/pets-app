@@ -23,11 +23,13 @@ class Header extends Component {
         </TouchableWithoutFeedback>
         <Text style={{ fontWeight: 'bold', fontSize: 17, color: '#fff', fontFamily: 'Roboto' }}>Mascotas</Text>
         {/* <Image style={styles.logo} source={require('../Images/pet.png')} /> */}
-        <Icon
-          name="md-search"
-          color="white"
-          size={27}
-        />
+        <TouchableWithoutFeedback onPress={this.props.toggleFilter}>
+          <Icon
+            name="md-funnel"
+            color="white"
+            size={27}
+          />
+        </TouchableWithoutFeedback>
       </View>
     );
   }

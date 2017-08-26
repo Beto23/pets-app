@@ -9,25 +9,31 @@ import SideMenu from 'react-native-side-menu';
 import Header from '../Components/Header';
 import Menu from '../Components/Menu';
 import PetList from './PetsList';
+import ModalFilter from '../Components/ModalFilter';
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isOpen: false,
+      isOpenMenu: false,
+      isOpenModalFilter: false,
     };
   }
 
   handleToggle = () => {
-    this.setState({ isOpen: !this.state.isOpen });
+    this.setState({ isOpen: !this.state.isOpenMenu });
   }
 
-  updateMenu(isOpen) {
-    this.setState({ isOpen });
+  updateMenu(isOpenMenu) {
+    this.setState({ isOpenMenu });
   }
 
   closeMenu = () => {
-    this.setState({ isOpen: false });
+    this.setState({ isOpenMenu: false });
+  }
+
+  handleModalFilter = () => {
+    this.setState({ isOpenModalFilter: !this.state.isOpenModalFilter });
   }
 
   render() {
@@ -35,12 +41,19 @@ class Home extends Component {
       <View style={styles.container}>
         <SideMenu
           menu={<Menu closeMenu={this.closeMenu} />}
-          isOpen={this.state.isOpen}
+          isOpen={this.state.isOpenMenu}
           onChange={(isOpen) => this.updateMenu(isOpen)}
         >
-          <Header toggle={this.handleToggle} />
+          <Header
+            toggle={this.handleToggle}
+            toggleFilter={this.handleModalFilter}  
+          />
           <PetList />
         </SideMenu>
+        <ModalFilter 
+          isOpenModalFilter={this.state.isOpenModalFilter}
+          handleModalFilter={this.handleModalFilter}
+        />
       </View>
     );
   }
