@@ -20,19 +20,6 @@ class PetsList extends Component {
     };
   }
 
-  componentDidMount() {
-    const pets = firebaseDataBase.ref('pet');
-    pets.on('value', snapshot => {
-      const data = snapshot.val();
-      const dataWithKeys = Object.keys(data).map(key => {
-        const obj = data[key];
-        obj._key = key;
-        return obj;
-      });
-      this.setState({ data: dataWithKeys });
-    });
-  }
-
   _keyExtractor = (item) => item._key;
 
   handleCardClick = (data) => {
@@ -43,7 +30,7 @@ class PetsList extends Component {
     return (
       <View style={styles.container}>
         <FlatList 
-          data={this.state.data}
+          data={this.props.data}
           keyExtractor={this._keyExtractor}
           renderItem={(item, key) => (<TouchableOpacity
             key={key} onPress={() => this.handleCardClick(item.item)}

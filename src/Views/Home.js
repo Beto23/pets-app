@@ -4,6 +4,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import SideMenu from 'react-native-side-menu';
+import { firebaseDataBase } from '../firebase';
 
 // Components
 import Header from '../Components/Header';
@@ -17,7 +18,24 @@ class Home extends Component {
     this.state = {
       isOpenMenu: false,
       isOpenModalFilter: false,
+      dataList: [],
+      dataListFilter: [],
+      orginalData: [],
+      filters: null,
     };
+  }
+
+  componentDidMount() {
+    const pets = firebaseDataBase.ref('pet');
+    pets.on('value', snapshot => {
+      const data = snapshot.val();
+      const dataWithKeys = Object.keys(data).map(key => {
+        const obj = data[key];
+        obj._key = key;
+        return obj;
+      });
+      this.setState({ dataList: dataWithKeys, orginalData: dataWithKeys });
+    });
   }
 
   handleToggle = () => {
@@ -32,8 +50,27 @@ class Home extends Component {
     this.setState({ isOpenMenu: false });
   }
 
-  handleModalFilter = () => {
+  handleShowModalFilter = () => {
     this.setState({ isOpenModalFilter: !this.state.isOpenModalFilter });
+  }
+
+  handleFilter = (state, city) => {
+    const filter = this.state.orginalData.filter(f => f.state.id === state.id && f.city.id === city.id);
+    this.setState({
+      dataList: filter,
+      filters: {
+        city,
+        state,
+      },
+    });
+    this.handleShowModalFilter();
+  }
+
+  removeFilter = () => {
+    this.setState({
+      dataList: this.state.orginalData,
+      filters: null,
+    });
   }
 
   render() {
@@ -46,13 +83,16 @@ class Home extends Component {
         >
           <Header
             toggle={this.handleToggle}
-            toggleFilter={this.handleModalFilter}  
+            toggleFilter={this.handleShowModalFilter}
+            filter={this.state.filters}
+            removeFilter={this.removeFilter}
           />
-          <PetList />
+          <PetList data={this.state.dataList} />
         </SideMenu>
         <ModalFilter 
           isOpenModalFilter={this.state.isOpenModalFilter}
-          handleModalFilter={this.handleModalFilter}
+          handleModalFilter={this.handleShowModalFilter}
+          handleFilter={this.handleFilter}
         />
       </View>
     );
