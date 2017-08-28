@@ -103,6 +103,7 @@ class Login extends Component {
     }
 
     handleLogOut = () => {
+      firebaseAuth.app.auth().signOut();
       AsyncStorage.removeItem('credentials');
       this.setState({
         isShowLoader: false,
