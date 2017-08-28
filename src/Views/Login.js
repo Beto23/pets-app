@@ -6,6 +6,7 @@ import {
   Image,
   Button,
   StyleSheet,
+  AsyncStorage,
   ActivityIndicator,
 } from 'react-native';
 
@@ -19,6 +20,7 @@ import { Actions } from 'react-native-router-flux';
 // Firebase
 import firebase, { firebaseAuth } from '../firebase';
 
+// const connectionRef = firebaseDataBase.ref('.ifo/connected');
 const { FacebookAuthProvider } = firebase.auth;
 
 class Login extends Component {
@@ -34,32 +36,43 @@ class Login extends Component {
   }
 
   componentWillMount() {
-    this.authenticateUser();
+    // AsyncStorage.removeItem('credentials');
+    AsyncStorage.getItem('credentials')
+      .then(credentialsJson => {
+        const credentials = JSON.parse(credentialsJson);
+        this.setState({ credentials });
+      })
+      .then(() => {
+        this.authenticateUser();
+      })
+      .catch(error => console.log(error));
   }
+
+  // componentDidMount() {
+  //   connectionRef.on('value', snap => {
+  //     console.log('connection', snap.val());
+  //   });
+  // }
 
     authenticateUser = () => {
       AccessToken.getCurrentAccessToken().then((data) => {
         this.setState({ isShowLoader: true });
         if (data) {
-          const { accessToken } = data;
-          const credential = FacebookAuthProvider.credential(accessToken);
-          firebaseAuth.signInWithCredential(credential).then((credentials) => {
-            this.setState({
-              credentials,
-              isShowLoader: false,
-              isShowButtonNext: true,
-              isShowButtonNextWhitout: false,
+          if (!this.state.credentials) {
+            const { accessToken } = data;
+            const credential = FacebookAuthProvider.credential(accessToken);
+            firebaseAuth.signInWithCredential(credential).then((credentials) => {
+              this.handleSuccessCredentials(credentials);
+              AsyncStorage.setItem('credentials', JSON.stringify(credentials));
+            }).catch((error) => {
+              console.log('Sign In Error', error);
             });
-            Actions.root({ credentials });
-          }).catch((error) => {
-            console.log('Sign In Error', error);
-          });
+          } else {
+            const { credentials } = this.state;
+            this.handleSuccessCredentials(credentials); 
+          }
         } else {
-          this.setState({
-            isShowLoader: false,
-            isShowButtonNextWhitout: true,
-            isShowButtonNext: false,
-          });
+          this.handleLogOut();
         }
       });
     }
@@ -75,21 +88,32 @@ class Login extends Component {
       }
     }
 
+    handleSuccessCredentials = (credentials) => {
+      this.setState({
+        credentials,
+        isShowLoader: false,
+        isShowButtonNext: true,
+        isShowButtonNextWhitout: false,
+      });
+      Actions.root({ credentials });
+    }
+
     handleButtonPress = () => {
       Actions.root();
     }
 
     handleLogOut = () => {
+      AsyncStorage.removeItem('credentials');
       this.setState({
-        isShowButtonNext: false,
+        isShowLoader: false,
         isShowButtonNextWhitout: true,
+        isShowButtonNext: false,
         credentials: null,
       });
     }
 
     render() {
       const { credentials, isShowButtonNext, isShowButtonNextWhitout } = this.state;
-      console.log(credentials);
       return (
         <View style={styles.container}>
           <Image
@@ -97,7 +121,7 @@ class Login extends Component {
             source={require('../Images/pexels-photo-167085.jpeg')}
           >
             <Text style={styles.welcome}>Adopta una Mascota</Text>
-            { this.state.isShowLoader ? <ActivityIndicator /> : null}
+            { this.state.isShowLoader ? <ActivityIndicator style={{ margin: 10 }} /> : null}
             {
               credentials ? null : <LoginButton
                 readPermissions={['public_profile', 'email']}
