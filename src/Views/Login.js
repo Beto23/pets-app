@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 
 import {
-  LoginButton,
+  LoginManager,
   AccessToken,
 } from 'react-native-fbsdk';
 
@@ -28,9 +28,7 @@ class Login extends Component {
     super(props);
     this.state = {
       credentials: null,
-      isShowLoader: false, 
-      isShowButtonNext: false,
-      isShowButtonNextWhitout: false,
+      isShowLoader: false,
     };
     console.ignoredYellowBox = ['Setting a timer'];
   }
@@ -56,8 +54,8 @@ class Login extends Component {
 
     authenticateUser = () => {
       AccessToken.getCurrentAccessToken().then((data) => {
-        this.setState({ isShowLoader: true });
         if (data) {
+          this.setState({ isShowLoader: true });
           if (!this.state.credentials) {
             const { accessToken } = data;
             const credential = FacebookAuthProvider.credential(accessToken);
@@ -71,29 +69,14 @@ class Login extends Component {
             const { credentials } = this.state;
             this.handleSuccessCredentials(credentials); 
           }
-        } else {
-          this.handleLogOut();
         }
       });
-    }
-
-    handleLoginFinished = (error, result) => {
-      this.setState({ isShowButtonNextWhitout: false });
-      if (error) {
-        console.error(error);
-      } else if (result.isCancelled) {
-        alert('login is cancelled.');
-      } else {
-        this.authenticateUser();
-      }
     }
 
     handleSuccessCredentials = (credentials) => {
       this.setState({
         credentials,
         isShowLoader: false,
-        isShowButtonNext: true,
-        isShowButtonNextWhitout: false,
       });
       Actions.root({ credentials });
     }
@@ -107,14 +90,28 @@ class Login extends Component {
       AsyncStorage.removeItem('credentials');
       this.setState({
         isShowLoader: false,
-        isShowButtonNextWhitout: true,
-        isShowButtonNext: false,
         credentials: null,
       });
     }
 
+    handleFacebookLogin = () => {
+      LoginManager.logInWithReadPermissions(['public_profile', 'email'])
+        .then((result) => {
+          if (result.isCancelled) {
+            alert('login is cancelled.');
+          } else {
+            this.authenticateUser();
+          }
+        });
+    }
+
+    handleFacebookLogout = () => {
+      LoginManager.logOut();
+      this.handleLogOut();
+    }
+
     render() {
-      const { credentials, isShowButtonNext, isShowButtonNextWhitout } = this.state;
+      const { credentials } = this.state;
       return (
         <View style={styles.container}>
           <Image
@@ -123,24 +120,22 @@ class Login extends Component {
           >
             <Text style={styles.welcome}>Adopta una Mascota</Text>
             { this.state.isShowLoader ? <ActivityIndicator style={{ margin: 10 }} /> : null}
-            {
-              credentials ? null : <LoginButton
-                readPermissions={['public_profile', 'email']}
-                onLoginFinished={this.handleLoginFinished}
-                onLogoutFinished={this.handleLogOut} 
-              />
-            }
             {credentials ? <View>
               <Text style={styles.name}>{credentials.displayName}</Text>
               <Image style={styles.imageFacebook} source={{ uri: credentials.photoURL }} />
             </View> : null}
-            {isShowButtonNextWhitout ? <View style={{ marginTop: 20 }}>
-              <Button title='Continuar sin registrarse' onPress={this.handleButtonPress} color="#b7b7b7" />
-            </View> : null }
-
-            {isShowButtonNext ? <View style={{ marginTop: 20 }}>
-              <Button title='Seguir' onPress={this.handleButtonPress} color="#b7b7b7" />
-            </View> : null}
+            <View style={{ margin: 20 }}>
+              <Button title={credentials ? 'Seguir' : 'Continuar sin registrarse'} onPress={this.handleButtonPress} color="#b7b7b7" />
+            </View>
+            {
+              credentials ? <Button
+                onPress={this.handleFacebookLogout}
+                title='cerrar sesion'
+              /> : <Button
+                onPress={this.handleFacebookLogin}
+                title='iniciar con facebook'
+              />
+            }
           </Image>
         </View>
       );
