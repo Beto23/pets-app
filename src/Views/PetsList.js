@@ -7,10 +7,10 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { firebaseDataBase } from '../firebase';
 
 // Components
 import Card from '../Components/Card';
+import Loader from '../Components/LoaderTitle.js';
 
 class PetsList extends Component {
   constructor(props) {
@@ -29,13 +29,15 @@ class PetsList extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <FlatList 
-          data={this.props.data}
-          keyExtractor={this._keyExtractor}
-          renderItem={(item, key) => (<TouchableOpacity
-            key={key} onPress={() => this.handleCardClick(item.item)}
-          ><Card item={item.item} /></TouchableOpacity>)}
-        />
+        {
+          this.props.data.length === 0 ? <Loader /> : <FlatList 
+            data={this.props.data}
+            keyExtractor={this._keyExtractor}
+            renderItem={(item, key) => (<TouchableOpacity
+              key={key} onPress={() => this.handleCardClick(item.item)}
+            ><Card item={item.item} /></TouchableOpacity>)}
+          />  
+        } 
       </View>
     );
   }
