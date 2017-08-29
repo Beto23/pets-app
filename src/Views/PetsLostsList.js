@@ -3,14 +3,11 @@ import React, { Component } from 'react';
 import {
   View,
   StyleSheet,
-  TouchableOpacity,
-  FlatList,
 } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 import { firebaseDataBase } from '../firebase';
 
 // Components
-import Card from '../Components/Card';
+import ListPet from './PetsList';
 
 class PetsLostsList extends Component {
   constructor(props) {
@@ -33,38 +30,20 @@ class PetsLostsList extends Component {
     });
   }
 
-    _keyExtractor = (item) => item._key;
-
-    handleClick = (data) => {
-      Actions.PetDetail({ data, isPetLost: true });
-    }
-
-    renderItem(item) {
-      return (
-        <TouchableOpacity onPress={() => this.handleClick(item.item)}>
-          <Card item={item.item} />
-        </TouchableOpacity>
-      );
-    }
-
-    render() {
-      return (
-        <View style={styles.containter}>
-          <FlatList 
-            data={this.state.data}
-            keyExtractor={this._keyExtractor}
-            renderItem={(item) => this.renderItem(item)}
-          />
-        </View>
-      );
-    }
+  render() {
+    return (
+      <View style={styles.containter}>
+        <ListPet data={this.state.data} />
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
   containter: {
     flex: 1,
+    backgroundColor: '#e9ebee',
     paddingTop: 60,
-    backgroundColor: 'white',
   },
 });
 
