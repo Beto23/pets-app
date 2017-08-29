@@ -36,11 +36,23 @@ class Menu extends Component {
       this.props.closeMenu();
     }
 
+    handleItems = () => {
+      const { credentials } = this.props;
+      return menuPaths.map(item => {
+        if (!item.needLogin) {
+          return <ItemBox handleItem={this.handlePath} key={item.id} item={item} />;
+        } else if (credentials && item.needLogin) {
+          return <ItemBox handleItem={this.handlePath} key={item.id} item={item} />;
+        }
+        return null;
+      });
+    }
+
     render() {
       return (
         <View style={styles.menu}>
           {
-            menuPaths.map(path => <ItemBox handleItem={this.handlePath} key={path.id} item={path} />)
+            this.handleItems()
           }
           <LoginButton onLogoutFinished={() => Actions.Login()} />
         </View>

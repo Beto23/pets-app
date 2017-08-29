@@ -77,7 +77,7 @@ class Home extends Component {
     return (
       <View style={styles.container}>
         <SideMenu
-          menu={<Menu closeMenu={this.closeMenu} />}
+          menu={<Menu closeMenu={this.closeMenu} credentials={this.props.credentials} />}
           isOpen={this.state.isOpenMenu}
           onChange={(isOpen) => this.updateMenu(isOpen)}
         >
