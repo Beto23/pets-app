@@ -20,6 +20,9 @@ import { Actions } from 'react-native-router-flux';
 // Firebase
 import firebase, { firebaseAuth } from '../firebase';
 
+// Components
+import LoginButton from '../Components/ButtonLoginFacebook';
+
 // const connectionRef = firebaseDataBase.ref('.ifo/connected');
 const { FacebookAuthProvider } = firebase.auth;
 
@@ -128,13 +131,8 @@ class Login extends Component {
               <Button title={credentials ? 'Seguir' : 'Continuar sin registrarse'} onPress={this.handleButtonPress} color="#b7b7b7" />
             </View>
             {
-              credentials ? <Button
-                onPress={this.handleFacebookLogout}
-                title='cerrar sesion'
-              /> : <Button
-                onPress={this.handleFacebookLogin}
-                title='iniciar con facebook'
-              />
+              credentials ? <LoginButton text='Cerrar Sesión' handleButton={this.handleFacebookLogout} />
+                : <LoginButton text='Ingresar con Facebook' handleButton={this.handleFacebookLogin} />
             }
           </Image>
         </View>
