@@ -39,7 +39,7 @@ class Home extends Component {
   }
 
   handleToggle = () => {
-    this.setState({ isOpen: !this.state.isOpenMenu });
+    this.setState({ isOpenMenu: !this.state.isOpenMenu });
   }
 
   updateMenu(isOpenMenu) {
