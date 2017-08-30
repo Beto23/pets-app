@@ -10,9 +10,10 @@ import {
 } from 'react-native';
 import Communications from 'react-native-communications';
 import Icon from 'react-native-vector-icons/Ionicons';
+import IconAw from 'react-native-vector-icons/FontAwesome';
 
 // Components
-// import Map from '../Components/Map';
+import MapLight from '../Components/MapLight';
 
 class PetDetail extends Component {
   constructor(props) {
@@ -30,7 +31,8 @@ class PetDetail extends Component {
     }
 
     render() {
-      const { age, breed, description, email, gender, imagePath, name, nameContact, phone, size, specie } = this.props.data;
+      const { age, breed, description, email, gender, imagePath, street, neighborhood,
+        name, nameContact, phone, size, specie, state, city, date, region } = this.props.data;
       return (
         <ScrollView>
           <View style={styles.container}>
@@ -45,7 +47,7 @@ class PetDetail extends Component {
                 <Text
                   style={[styles.whiteText, { fontSize: 16, fontWeight: 'bold' }]}
                 >
-                  {specie} {this.props.isPetLost ? this.state.typeDetail.lost : this.state.typeDetail.adop}
+                  {specie} {this.props.isPetAdop ? this.state.typeDetail.adop : this.state.typeDetail.lost}
                 </Text>
               </View>
               <View style={{ alignItems: 'center' }}>
@@ -57,6 +59,7 @@ class PetDetail extends Component {
               </View>
 
             </View>
+
             <View style={styles.paddingSection}>
               <Text style={[styles.sectionTitle, styles.label]}>Descripción</Text>
               <View>
@@ -65,6 +68,29 @@ class PetDetail extends Component {
                 </Text>
               </View>
             </View>
+
+            {
+              /* lost  */
+              !this.props.isPetAdop ? <View>
+                <View style={styles.paddingSection}>
+                  <Text style={[styles.sectionTitle, styles.label]}>Información de perdida</Text>
+                  <View>
+                    <Text>Fecha</Text>
+                    <Text style={styles.descriptionText}>
+                      {date}
+                    </Text>
+                  </View>
+                  <View>
+                    <Text>Ubicación</Text>
+                    <Text style={styles.descriptionText}>
+                      Col. {neighborhood}, {street}
+                    </Text>
+                  </View>
+                </View>
+                <MapLight region={region} />
+              </View> : null
+            }
+
             <View style={styles.paddingSection}>
               <Text style={[styles.sectionTitle, styles.label]}>Contacto</Text>
               <View style={styles.infoContent}>
@@ -92,6 +118,12 @@ class PetDetail extends Component {
                     <Text style={{ marginLeft: 10 }}>{email}</Text>
                   </TouchableOpacity>
                 </View>
+                <View style={styles.contactContainer}>
+                  <View style={styles.contactIconContainer}>
+                    <IconAw style={{ marginRight: 10 }} name="map-marker" size={25} color="#0084ff" />
+                    <Text style={{ marginLeft: 10 }}>{city.name}, {state.name}</Text>
+                  </View>
+                </View>
               </View>
             </View>
           </View>
@@ -101,7 +133,7 @@ class PetDetail extends Component {
 }
 
 PetDetail.defaultProps = {
-  isPetLost: false,
+  isPetAdop: false,
 };
 
 const styles = StyleSheet.create({
@@ -127,7 +159,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   paddingSection: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 15,
   },
   imageContainer: {
     alignItems: 'center',

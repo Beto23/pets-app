@@ -23,7 +23,7 @@ class PetsList extends Component {
   _keyExtractor = (item) => item._key;
 
   handleCardClick = (data) => {
-    Actions.PetDetail({ data });
+    Actions.PetDetail({ data, isPetAdop: this.props.isPetAdop });
   }
 
   render() {
