@@ -38,7 +38,7 @@ export default class pets extends Component {
           <Scene
             key="PetsLostsList"
             component={PetsLostsList}
-            hideNavBar={false}
+            hideNavBar
             title="Mascotas Perdidas"
             navigationBarStyle={styles.navBar}
             titleStyle={styles.navBarTitle}

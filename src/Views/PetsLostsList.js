@@ -7,7 +7,7 @@ import {
 import { firebaseDataBase } from '../firebase';
 
 // Components
-import ListPet from './PetsList';
+import ContainerHeaderList from '../Components/ContainerHeaderList';
 
 class PetsLostsList extends Component {
   constructor(props) {
@@ -33,7 +33,11 @@ class PetsLostsList extends Component {
   render() {
     return (
       <View style={styles.containter}>
-        <ListPet data={this.state.data} />
+        <ContainerHeaderList
+          data={this.state.data}
+          pathRef={'petLost'}
+          isHome={false}
+        />
       </View>
     );
   }
@@ -42,8 +46,6 @@ class PetsLostsList extends Component {
 const styles = StyleSheet.create({
   containter: {
     flex: 1,
-    backgroundColor: '#e9ebee',
-    paddingTop: 60,
   },
 });
 
