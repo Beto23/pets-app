@@ -37,6 +37,7 @@ class PetsLostsList extends Component {
           data={this.state.data}
           pathRef={'petLost'}
           isHome={false}
+          headerTitle='Mascotas Perdidas'
         />
       </View>
     );

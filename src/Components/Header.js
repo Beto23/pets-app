@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
 } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -15,14 +16,22 @@ class Header extends Component {
     return (
       <View>
         <View style={styles.container}>
-          <TouchableWithoutFeedback onPress={this.props.toggle}>
-            <Icon
-              name="md-menu"
-              color="white"
-              size={27}
-            />
-          </TouchableWithoutFeedback>
-          <Text style={{ fontWeight: 'bold', fontSize: 17, color: '#fff', fontFamily: 'Roboto' }}>Mascotas</Text>
+          {
+            this.props.isMenuShow ? <TouchableWithoutFeedback onPress={this.props.toggle}>
+              <Icon
+                name="md-menu"
+                color="white"
+                size={27}
+              />
+            </TouchableWithoutFeedback> : <TouchableWithoutFeedback onPress={() => Actions.pop()}>
+              <Icon
+                name="ios-arrow-back-outline"
+                color="white"
+                size={27}
+              />
+            </TouchableWithoutFeedback>
+          }
+          <Text style={{ fontWeight: 'bold', fontSize: 17, color: '#fff', fontFamily: 'Roboto' }}>{this.props.title}</Text>
           {/* <Image style={styles.logo} source={require('../Images/pet.png')} /> */}
           <TouchableWithoutFeedback onPress={this.props.toggleFilter}>
             <Icon
@@ -72,5 +81,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
 });
+
+Header.defaultProps = {
+  isMenu: true,
+  title: 'Mascotas',
+};
 
 export default Header;

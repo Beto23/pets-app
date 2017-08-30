@@ -71,6 +71,8 @@ class ContainerHeaderList extends Component {
           toggleFilter={this.handleShowModalFilter}
           filter={this.state.filters}
           removeFilter={this.removeFilter}
+          isMenuShow={this.props.isHome}
+          title={this.props.headerTitle}
         />
         <PetList data={this.state.dataList} />
       </View>
