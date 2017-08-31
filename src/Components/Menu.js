@@ -6,14 +6,16 @@ import {
   Text,
   Image,
   StyleSheet,
+  AsyncStorage,
 } from 'react-native';
-
-// import { LoginButton } from 'react-native-fbsdk';
-
+import { LoginManager } from 'react-native-fbsdk';
 import { Actions } from 'react-native-router-flux';
+
+import { firebaseAuth } from '../firebase';
 
 // Components
 import ItemBox from './ItemBox';
+import LogOut from './ButtonLoginFacebook';
 
 // paths
 import { menuPaths } from '../menuPaths';
@@ -46,11 +48,27 @@ class Menu extends Component {
       return menuPaths.map(item => {
         if (!item.needLogin) {
           return <ItemBox handleItem={this.handlePath} key={item.id} item={item} />;
+        } else if (credentials && item.needLogin && item.isButtonFace) {
+          return (
+            <LogOut
+              customStyle={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}
+              key={item.id}
+              text={item.name}
+              handleButton={this.handleFacebookLogout}
+            />
+          );
         } else if (credentials && item.needLogin) {
           return <ItemBox handleItem={this.handlePath} key={item.id} item={item} />;
         }
         return null;
       });
+    }
+
+    handleFacebookLogout() {
+      LoginManager.logOut();
+      Actions.Login();
+      firebaseAuth.app.auth().signOut();
+      AsyncStorage.removeItem('credentials');
     }
 
     render() {
@@ -79,7 +97,6 @@ class Menu extends Component {
           {
             this.handleItems()
           }
-          {/* <LoginButton onLogoutFinished={() => Actions.Login()} /> */}
         </View>
       );
     }

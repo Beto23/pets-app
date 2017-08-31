@@ -19,4 +19,10 @@ export const menuPaths = [
     name: 'Acerca de',
     needLogin: false,
   },
+  {
+    id: 5,
+    name: 'Cerrar Sesión',
+    needLogin: true,
+    isButtonFace: true,
+  },
 ];

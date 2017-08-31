@@ -7,7 +7,7 @@ class LoginFacebookButton extends Component {
   render() {
     return (
       <TouchableHighlight
-        style={styles.button}
+        style={[styles.button, this.props.customStyle]}
         onPress={this.props.handleButton}
       >
         <View style={styles.buttonContainer}>
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#3b5998',
     paddingHorizontal: 10,
     paddingVertical: 5,
-    borderRadius: 3,
+    borderRadius: 1,
   },
   buttonContainer: {
     flexDirection: 'row',
