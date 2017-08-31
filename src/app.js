@@ -18,6 +18,7 @@ import PetsLostsList from './Views/PetsLostsList';
 import PetLostDetail from './Views/PetLostDetail';
 import PetAdd from './Views/PetAdd';
 import PetLostAdd from './Views/PetLostAdd';
+import About from './Views/About';
 
 export default class pets extends Component {
   render() {
@@ -26,6 +27,15 @@ export default class pets extends Component {
         <Scene key="Login" component={Login} hideNavBar />        
         <Scene key="root">
           <Scene key="Home" component={Home} hideNavBar />
+          <Scene
+            key="About"
+            component={About}
+            hideNavBar={false}
+            title="Acerca de"
+            navigationBarStyle={styles.navBar}
+            titleStyle={styles.navBarTitle}
+            leftButtonIconStyle={styles.barButtonIconStyle}
+          />
           <Scene key="PetList" component={PetList} hideNavBar />
           <Scene
             key="PetDetail"

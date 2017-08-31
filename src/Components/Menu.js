@@ -32,6 +32,9 @@ class Menu extends Component {
         case 3:
           Actions.PetLostAdd();
           break;
+        case 4:
+          Actions.About();
+          break;
         default:
           break;
       }
@@ -64,7 +67,14 @@ class Menu extends Component {
                 style={styles.photo}
               />
               <Text style={{ color: '#fff' }}>{credentials.displayName}</Text>
-            </View> : null
+            </View> : <View
+              style={styles.header}
+            >
+              <Image
+                source={{ uri: 'https://i.pinimg.com/originals/3f/3c/d9/3f3cd9f9acd27730ae1e9a3fa315b1f8.png' }}
+                style={{ width: 70, height: 90 }}
+              />
+            </View>
           }
           {
             this.handleItems()
