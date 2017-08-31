@@ -119,7 +119,7 @@ class Login extends Component {
         <View style={styles.container}>
           <Image
             style={styles.image}
-            source={require('../Images/pexels-photo-167085.jpeg')}
+            source={require('../Images/pexels-photo-144640.png')}
           >
             <Text style={styles.welcome}>Adopta una Mascota</Text>
             { this.state.isShowLoader ? <ActivityIndicator style={{ margin: 10 }} /> : null}
@@ -128,7 +128,7 @@ class Login extends Component {
               <Image style={styles.imageFacebook} source={{ uri: credentials.photoURL }} />
             </View> : null}
             <View style={{ margin: 20 }}>
-              <Button title={credentials ? 'Seguir' : 'Continuar sin registrarse'} onPress={this.handleButtonPress} color="#b7b7b7" />
+              <Button title={credentials ? 'Seguir' : 'Continuar sin registrarse'} onPress={this.handleButtonPress} color="#039BE5" />
             </View>
             {
               credentials ? <LoginButton text='Cerrar Sesión' handleButton={this.handleFacebookLogout} />
