@@ -13,10 +13,16 @@ class Home extends Component {
     super(props);
     this.state = {
       data: [],
+      isLoaderShow: false,
     };
   }
 
   componentDidMount() {
+    this.getPets();
+  }
+
+  getPets = () => {
+    this.setState({ isLoaderShow: true });
     const pets = firebaseDataBase.ref('pet');
     pets.on('value', snapshot => {
       const data = snapshot.val();
@@ -25,7 +31,7 @@ class Home extends Component {
         obj._key = key;
         return obj;
       });
-      this.setState({ data: dataWithKeys });
+      this.setState({ data: dataWithKeys, isLoaderShow: false });
     });
   }
 
@@ -37,6 +43,7 @@ class Home extends Component {
           pathRef={'petLost'}
           credentials={this.props.credentials}
           isHome
+          isLoaderShow={this.state.isLoaderShow}
         />
       </View>
     );

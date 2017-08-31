@@ -80,7 +80,11 @@ class ContainerHeaderList extends Component {
           isMenuShow={this.props.isHome}
           title={this.props.headerTitle}
         />
-        <PetList isPetAdop={this.props.isHome} data={this.state.dataList} />
+        <PetList
+          isPetAdop={this.props.isHome}
+          data={this.state.dataList}
+          isLoaderShow={this.props.isLoaderShow}
+        />
       </View> 
     );
   }

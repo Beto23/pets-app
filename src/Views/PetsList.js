@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import {
   View,
+  Text,
   StyleSheet,
   FlatList,
   TouchableOpacity,
@@ -27,10 +28,16 @@ class PetsList extends Component {
   }
 
   render() {
+    const { isLoaderShow, data } = this.props;
     return (
       <View style={styles.container}>
         {
-          this.props.data.length === 0 ? <Loader /> : <FlatList 
+          isLoaderShow ? <Loader /> : null
+        }
+        {
+          data.length === 0 && !isLoaderShow ? <View style={styles.noData}>
+            <Text style={{ fontSize: 17 }}>Sin Datos</Text>
+          </View> : <FlatList 
             data={this.props.data}
             keyExtractor={this._keyExtractor}
             renderItem={(item, key) => (<TouchableOpacity
@@ -49,6 +56,11 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 10,
     paddingTop: 10,
+  },
+  noData: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
