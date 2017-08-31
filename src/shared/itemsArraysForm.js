@@ -13,6 +13,8 @@ export const species = [
   },
 ];
 
+export const speciesFilter = [{ id: 0, name: '' }, ...species];
+
 export const breedCat = [
   {
     id: 1,

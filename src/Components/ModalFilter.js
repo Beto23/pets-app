@@ -13,7 +13,10 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { firebaseDataBase } from '../firebase';
 
 // Components
-import Picker from '../Components/pickerFieldV2';
+import PickerCustom from '../Components/pickerFieldV2';
+import PickerV1 from '../Components/PickerField';
+
+import { speciesFilter } from '../shared/itemsArraysForm';
 
 const { width } = Dimensions.get('window');
 
@@ -23,6 +26,7 @@ class ModalFilter extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      specie: speciesFilter[0].name,
       states: [],
       cities: [],
       state: {
@@ -102,11 +106,12 @@ class ModalFilter extends Component {
     }
 
     handleButton= () => {
-      const { state, city } = this.state;
-      this.props.handleFilter(state, city);
+      const { state, city, specie } = this.state;
+      this.props.handleFilter(state, city, specie);
     }
 
     render() {
+      console.log(speciesFilter);
       return (
         <View style={{ backgroundColor: 'red' }}>
           <Modal
@@ -131,14 +136,22 @@ class ModalFilter extends Component {
                   <Text style={{ color: '#000', fontSize: 18, alignSelf: 'center' }}>Mascota</Text>
                 </View>
                 <View style={styles.ContainerBox}>
-                  <Picker
+                  <PickerV1
+                    selectedValue={this.state.specie}
+                    onValueChange={(itemValue) => this.setState({ specie: itemValue })}
+                    width={((ContainerWidth - 20) / 2)}
+                    label="Especie"
+                    items={speciesFilter}
+                  />
+
+                  <PickerCustom
                     selectedValue={this.state.state.id}
                     onValueChange={(itemValue) => this.handleSelectState(itemValue)}
                     label="Estado"
                     items={this.state.states}
                     width={((ContainerWidth - 20) / 2)}
                   />
-                  <Picker
+                  <PickerCustom
                     selectedValue={this.state.city.id}
                     onValueChange={(itemValue) => this.handleSelectCity(itemValue)}
                     label="Ciudad"

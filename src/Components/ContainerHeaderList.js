@@ -44,8 +44,14 @@ class ContainerHeaderList extends Component {
     this.setState({ isOpenModalFilter: !this.state.isOpenModalFilter });
   }
 
-  handleFilter = (state, city) => {
-    const filter = this.state.orginalData.filter(f => f.state.id === state.id && f.city.id === city.id);
+  handleFilter = (state, city, specie) => {
+    let filter = [];
+    if (specie) {
+      filter = this.state.orginalData.filter(f => f.state.id === state.id && f.city.id === city.id 
+        && f.specie === specie);
+    } else {
+      filter = this.state.orginalData.filter(f => f.state.id === state.id && f.city.id === city.id);
+    }
     this.setState({
       dataList: filter,
       filters: {

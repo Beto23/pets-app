@@ -73,7 +73,6 @@ class Menu extends Component {
 
     render() {
       const { credentials } = this.props;
-      console.log(credentials);
       return (
         <View style={styles.menu}>
           {
