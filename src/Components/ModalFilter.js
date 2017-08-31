@@ -6,7 +6,7 @@ import {
   Modal,
   Button,
   StyleSheet,
-  TouchableHighlight,
+  TouchableWithoutFeedback,
   Dimensions,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -111,7 +111,6 @@ class ModalFilter extends Component {
     }
 
     render() {
-      console.log(speciesFilter);
       return (
         <View style={{ backgroundColor: 'red' }}>
           <Modal
@@ -123,16 +122,17 @@ class ModalFilter extends Component {
             <View style={styles.container}>
               <View style={styles.box}>
                 <View>
-                  <TouchableHighlight
-                    style={{ paddingHorizontal: 11, alignSelf: 'flex-end' }}
-                    onPress={this.props.handleModalFilter}
-                  >
-                    <Icon
-                      name="ios-close-outline"
-                      color="#000"
-                      size={30}
-                    />
-                  </TouchableHighlight>
+                  <View style={{ paddingHorizontal: 11, alignSelf: 'flex-end' }}>
+                    <TouchableWithoutFeedback
+                      onPress={this.props.handleModalFilter}
+                    >
+                      <Icon
+                        name="ios-close-outline"
+                        color="#000"
+                        size={30}
+                      />
+                    </TouchableWithoutFeedback>
+                  </View>
                   <Text style={{ color: '#000', fontSize: 18, alignSelf: 'center' }}>Mascota</Text>
                 </View>
                 <View style={styles.ContainerBox}>
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
   box: {
     backgroundColor: '#fff',
     width: (ContainerWidth - 20),
-    height: 300,
+    height: 320,
     justifyContent: 'space-between',
   },
   ContainerBox: {
