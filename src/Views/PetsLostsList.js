@@ -14,10 +14,16 @@ class PetsLostsList extends Component {
     super(props);
     this.state = {
       data: [],
+      isLoaderShow: false,
     };
   }
 
   componentDidMount() {
+    this.getPetsLost();
+  }
+
+  getPetsLost = () => {
+    this.setState({ isLoaderShow: true });
     const pets = firebaseDataBase.ref('petLost');
     pets.on('value', snapshot => {
       const data = snapshot.val();
@@ -27,6 +33,7 @@ class PetsLostsList extends Component {
         return obj;
       });
       this.setState({ data: dataWithKeys });
+      this.setState({ isLoaderShow: false });
     });
   }
 
@@ -38,6 +45,7 @@ class PetsLostsList extends Component {
           pathRef={'petLost'}
           isHome={false}
           headerTitle='Mascotas Perdidas'
+          isLoaderShow={this.state.isLoaderShow}
         />
       </View>
     );
