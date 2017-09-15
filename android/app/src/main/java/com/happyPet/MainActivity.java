@@ -1,4 +1,4 @@
-package com.pets;
+package com.happyPet;
 
 import com.facebook.react.ReactActivity;
 import android.content.Intent;

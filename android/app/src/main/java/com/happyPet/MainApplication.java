@@ -1,4 +1,4 @@
-package com.pets;
+package com.happyPet;
 
 import android.app.Application;
 
