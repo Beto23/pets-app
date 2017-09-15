@@ -11,7 +11,7 @@ class About extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Image style={styles.logo} source={{ uri: 'https://i.pinimg.com/originals/3f/3c/d9/3f3cd9f9acd27730ae1e9a3fa315b1f8.png' }} />
+        <Image style={styles.logo} source={require('../Images/logo1.png')} />
         <Text>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum dolor doloribus quaerat 
           velit reiciendis, fugiat odio, eum molestiae magnam fugit repellat quam eveniet ipsam nam facere, molestias totam ea vel.</Text>
       </View>
@@ -26,8 +26,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   logo: {
-    width: 92,
-    height: 120,
+    width: 90,
+    height: 90,
     alignSelf: 'center',
     marginBottom: 10,
   },

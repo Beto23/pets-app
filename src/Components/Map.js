@@ -49,7 +49,7 @@ class Map extends Component {
         this.props.handleMap(lat, lng, LATITUDE_DELTA, LONGITUDE_DELTA);
       },
       (error) => console.log(error, 'error'),
-      // { enableHighAccuracy: true, timeout: 10000, maximumAge: 3000 }
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 3000 }
     );
 
     // setTimeout(() => {

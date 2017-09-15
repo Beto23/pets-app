@@ -88,8 +88,8 @@ class Menu extends Component {
               style={styles.header}
             >
               <Image
-                source={{ uri: 'https://i.pinimg.com/originals/3f/3c/d9/3f3cd9f9acd27730ae1e9a3fa315b1f8.png' }}
-                style={{ width: 70, height: 90 }}
+                source={require('../Images/logo2.png')}
+                style={{ width: 90, height: 90 }}
               />
             </View>
           }
